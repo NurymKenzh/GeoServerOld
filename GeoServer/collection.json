@@ -1,0 +1,45 @@
+﻿{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 0, 0 ]
+      },
+      "properties": {
+        "name": "Free Willy"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 1, 1 ]
+      },
+      "properties": {
+        "name": "Moby Dick"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 2, 2 ]
+      },
+      "properties": {
+        "name": "Free Willy"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 3, 3 ]
+      },
+      "properties": {
+        "name": "Moby Dick"
+      }
+    }
+  ]
+}

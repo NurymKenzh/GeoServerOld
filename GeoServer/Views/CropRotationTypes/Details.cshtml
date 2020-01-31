@@ -1,0 +1,43 @@
+﻿@model GeoServer.Models.CropRotationType
+
+@{
+    ViewBag.Title = GeoServer.Resources.Interface.Details;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@GeoServer.Resources.Interface.Details</h2>
+
+<div>
+    <h4>@GeoServer.Resources.CropRotationTexts.CropRotationType</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NameRU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameRU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NameKK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameKK)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NameEN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameEN)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink(GeoServer.Resources.Interface.Edit, "Edit", new { id = Model.Id }) |
+    @Html.ActionLink(GeoServer.Resources.Interface.BackToList, "Index")
+</p>

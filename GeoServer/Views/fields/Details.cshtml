@@ -1,0 +1,35 @@
+﻿@model GeoServer.Models.field
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>field</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.id_)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.adm2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.adm2)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.gid }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

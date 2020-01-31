@@ -1,0 +1,59 @@
+﻿@model GeoServer.Models.CATO
+
+@{
+    ViewBag.Title = GeoServer.Resources.Interface.Details;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@GeoServer.Resources.Interface.Details</h2>
+
+<div>
+    <h4>@GeoServer.Resources.CATOTexts.CATO</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EF)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EF)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HIJ)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HIJ)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink(GeoServer.Resources.Interface.Edit, "Edit", new { id = Model.Id }) |
+    @Html.ActionLink(GeoServer.Resources.Interface.BackToList, "Index")
+</p>

@@ -1,0 +1,49 @@
+﻿@model GeoServer.Models.CropRotationType
+
+@{
+    ViewBag.Title = GeoServer.Resources.Interface.Delete;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@GeoServer.Resources.Interface.Delete</h2>
+
+<h3>@GeoServer.Resources.Interface.AreYouSureYouWantToDeleteThis</h3>
+<div>
+    <h4>@GeoServer.Resources.CropRotationTexts.CropRotationType</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NameRU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameRU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NameKK)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameKK)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NameEN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameEN)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="@GeoServer.Resources.Interface.Delete" class="btn btn-default" /> |
+            @Html.ActionLink(GeoServer.Resources.Interface.BackToList, "Index")
+        </div>
+    }
+</div>

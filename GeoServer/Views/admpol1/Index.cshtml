@@ -1,0 +1,40 @@
+﻿@model IEnumerable<GeoServer.Models.admpol1>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create") | @Html.ActionLink("Update", "Update")
+</p>
+<table class="table">
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.code_obl)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.CATO)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.code_obl)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.CATO.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.gid }) |
+            @Html.ActionLink("Details", "Details", new { id=item.gid }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.gid })
+        </td>
+    </tr>
+}
+
+</table>

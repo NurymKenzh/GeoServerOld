@@ -1,0 +1,78 @@
+﻿@model PagedList.IPagedList<GeoServer.Models.CropRotation>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = GeoServer.Resources.CropRotationTexts.CropRotations;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@GeoServer.Resources.CropRotationTexts.CropRotations</h2>
+
+<p>
+    @Html.ActionLink(GeoServer.Resources.Interface.CreateNew, "Create")
+</p>
+@using (Html.BeginForm("Index", "CropRotations", new { SortOrder = Request.QueryString["SortOrder"], CropRotationName = ViewBag.CropRotationNameFilter, fieldgid = ViewBag.fieldgidFilter, Year = ViewBag.YearFilter }, FormMethod.Get))
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.ActionLink(GeoServer.Resources.CropRotationTexts.CropRotationType, "Index", new { SortOrder = ViewBag.CropRotationNameSort, CropRotationName = ViewBag.CropRotationNameFilter, fieldgid = ViewBag.fieldgidFilter, Year = ViewBag.YearFilter })
+                <br />
+                @Html.DropDownList("CropRotationName", (IEnumerable<SelectListItem>)ViewBag.CropRotationNames, "", htmlAttributes: new { @class = "form-control" })
+            </th>
+            <th>
+                @Html.ActionLink(GeoServer.Resources.FieldTexts.Field, "Index", new { SortOrder = ViewBag.fieldgidSort, CropRotationName = ViewBag.CropRotationNameFilter, fieldgid = ViewBag.fieldgidFilter, Year = ViewBag.YearFilter })
+                <br />
+                @Html.Editor("fieldgid", null, new { htmlAttributes = new { @class = "form-control" }, value = "" })
+            </th>
+            <th>
+                @Html.ActionLink(GeoServer.Resources.Interface.Year, "Index", new { SortOrder = ViewBag.YearSort, CropRotationName = ViewBag.CropRotationNameFilter, fieldgid = ViewBag.fieldgidFilter, Year = ViewBag.YearFilter })
+                <br />
+                @Html.DropDownList("Year", Enumerable.Range(2000, 31).Select(i => new SelectListItem { Value = i.ToString(), Text = i.ToString() }), "", new { @class = "form-control", @id = "Year" })
+            </th>
+            <th>
+                <br />
+                <input type="submit" value=@GeoServer.Resources.Interface.Find class="btn btn-default">
+            </th>
+        </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @if (ViewBag.Language == "ru")
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.CropRotationType.NameRU)
+                </td>
+            }
+            @if (ViewBag.Language == "kk")
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.CropRotationType.NameKK)
+                </td>
+            }
+            @if (ViewBag.Language == "en")
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.CropRotationType.NameEN)
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.field.gid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td>
+                @Html.ActionLink(GeoServer.Resources.Interface.Edit, "Edit", new { id = item.Id }) |
+                @Html.ActionLink(GeoServer.Resources.Interface.Details, "Details", new { id = item.Id }) |
+                @Html.ActionLink(GeoServer.Resources.Interface.Delete, "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+    </table>
+}
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, SortOrder = Request.QueryString["SortOrder"], CropRotationName = ViewBag.CropRotationNameFilter, fieldgid = ViewBag.fieldgidFilter, Year = ViewBag.YearFilter }), new PagedListRenderOptions() { PageCountAndCurrentLocationFormat = "{0} / {1}", DisplayPageCountAndCurrentLocation = true })

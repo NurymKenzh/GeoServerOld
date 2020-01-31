@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Title = GeoServer.Resources.HomeTexts.Home;
+}
+
+<div class="jumbotron" style="padding: 0px;">
+    <img src="../Images/Logos/Frontpage.jpg" alt="" style="width: 100%;" />
+    @*<h1>GeoServer</h1>
+    <p class="lead">Text</p>*@
+    @*<p><a href="" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>
+            Мониторинг ТБО
+        </h2>
+        <p>
+            Проект «Геоинформационная система космического мониторинга полигонов твердых бытовых отходов на базе усовершенствованных технологий тематической обработки спутниковой информации»
+        </p>
+        <p>
+            @Html.ActionLink("Карта", "MSW", "Maps", null, new { @class = "btn btn-default" })
+        </p>
+
+    </div>
+    <div class="col-md-4">
+        <h2>
+            Зернопроизводство
+        </h2>
+        <p>
+            Проект «Программно-математическое обеспечение тематической калибровки спектрально-отражательных характеристик объектов земной поверхности с использованием данных КС ДЗЗ РК»
+        </p>
+        <p>
+            @Html.ActionLink("Карта", "Test", "Maps", null, new { @class = "btn btn-default" })
+        </p>
+        @*<p>
+            <a class="btn btn-default" href="">
+                Learn more &raquo;
+            </a>
+        </p>*@
+    </div>
+    <div class="col-md-4">
+        <h2>
+            Ирригация
+        </h2>
+        <p>
+            Проект «Система космического и наземного мониторинга мелиоративного состояния орошаемых земель Юга  Казахстана»
+        </p>
+        <p>
+            @Html.ActionLink("Карта", "Irrigation", "Maps", null, new { @class = "btn btn-default" })
+        </p>
+        @*<p>
+            <a class="btn btn-default" href="">
+                Learn more &raquo;
+            </a>
+        </p>*@
+    </div>
+    <div class="col-md-4">
+        @if (ViewBag.Admin)
+        {
+            <h2>
+                Администрирование
+            </h2>
+            <p>
+                Администрирование
+            </p>
+            <p>
+                @Html.ActionLink(GeoServer.Resources.AdminTexts.Users, "Users", "Admin", null, new { @class = "btn btn-default" })
+            </p>
+        }
+        @if ((ViewBag.Admin) || (ViewBag.Moderator))
+        {
+            <h2>
+                Модерирование
+            </h2>
+            <p>
+                Модерирование
+            </p>
+            <p>
+                @Html.ActionLink(GeoServer.Resources.CATOTexts.CATO, "Index", "CATOes", null, new { @class = "btn btn-default" })
+            </p>
+            @*<p>
+                    @Html.ActionLink(GeoServer.Resources.FieldTexts.Fields, "Index", "Fields", null, new { @class = "btn btn-default" })
+                </p>*@
+            <p>
+                @Html.ActionLink("NDVI", "Index", "NDVIs", null, new { @class = "btn btn-default" })
+            </p>
+            <p>
+                @Html.ActionLink(GeoServer.Resources.CropRotationTexts.CropRotationTypes, "Index", "CropRotationTypes", null, new { @class = "btn btn-default" })
+            </p>
+            <p>
+                @Html.ActionLink(GeoServer.Resources.CropRotationTexts.CropRotations, "Index", "CropRotations", null, new { @class = "btn btn-default" })
+            </p>
+            <p>
+                @Html.ActionLink(GeoServer.Resources.CropConditionTypeTexts.CropConditionTypes, "Index", "CropConditionTypes", null, new { @class = "btn btn-default" })
+            </p>
+        }
+
+    </div>
+</div>

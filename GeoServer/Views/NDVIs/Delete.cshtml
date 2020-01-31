@@ -1,0 +1,97 @@
+﻿@model GeoServer.Models.NDVI
+
+@{
+    ViewBag.Title = GeoServer.Resources.Interface.Delete;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@GeoServer.Resources.Interface.Delete</h2>
+
+<h3>@GeoServer.Resources.Interface.AreYouSureYouWantToDeleteThis</h3>
+<div>
+    <h4>NDVI</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.field)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fieldgid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Count)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Count)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Min)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Min)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Max)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Max)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Range)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Range)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Mean)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mean)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.STD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.STD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sum)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="@GeoServer.Resources.Interface.Delete" class="btn btn-default" /> |
+            @Html.ActionLink(GeoServer.Resources.Interface.BackToList, "Index")
+        </div>
+    }
+</div>

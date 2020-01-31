@@ -1,0 +1,73 @@
+﻿@model GeoServer.Models.CropRotation
+
+@{
+    ViewBag.Title = GeoServer.Resources.Interface.Delete;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@GeoServer.Resources.Interface.Delete</h2>
+
+<h3>@GeoServer.Resources.Interface.AreYouSureYouWantToDeleteThis</h3>
+<div>
+    <h4>@GeoServer.Resources.CropRotationTexts.CropRotation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        @if (ViewBag.Language == "ru")
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.CropRotationType.NameRU)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CropRotationType.NameRU)
+            </dd>
+        }
+        @if (ViewBag.Language == "en")
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.CropRotationType.NameEN)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CropRotationType.NameEN)
+            </dd>
+        }
+        @if (ViewBag.Language == "kk")
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.CropRotationType.NameKK)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CropRotationType.NameKK)
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fieldgid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fieldgid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Year)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Year)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="@GeoServer.Resources.Interface.Delete" class="btn btn-default" /> |
+            @Html.ActionLink(GeoServer.Resources.Interface.BackToList, "Index")
+        </div>
+    }
+</div>

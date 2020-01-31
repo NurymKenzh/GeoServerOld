@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "Test2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.12.4.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.0.js"></script>
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+
+<script src="~/Scripts/jquery.flot.js"></script>
+<script src="~/Scripts/jquery.flot.resize.js"></script>
+<script src="~/Scripts/jquery.flot.pie.js"></script>
+
+<div id="placeholder" style="width:600px;height:300px"></div>
+
+<input type="button" title="Информация" class="btn btn-default" onclick="Info()" style="width: 39px; height: 40px; margin: 6px;" />
+
+@* Окно диаграммы *@
+<div id="dialog_plot" title="Изменение" hidden="hidden" style="box-sizing: content-box;">
+
+</div>
+
+<script>
+    //function Info() {
+    //    var d1 = [];
+    //    for (var i = 0; i < 14; i += 0.5) {
+    //        d1.push([i, Math.sin(i)]);
+    //    };
+    //    $.plot('#dialog_plot', d1, {
+    //        series: {
+    //            lines: {
+    //                show: true
+    //            }
+    //        }
+    //    });
+    //    $(function () {
+    //        $("#dialog_plot").dialog({
+    //            width: 410,
+    //            height: 190
+    //        });
+    //    });
+    //    alert('end');
+    //};
+
+    function Info() {
+        var d1 = [];
+        for (var i = 0; i < 14; i += 0.5) {
+            d1.push([i, Math.sin(i)]);
+        };
+        $(function () {
+            $("#placeholder").dialog({
+                width: 410,
+                height: 190
+            });
+        });
+        $.plot('#placeholder', d1, {
+            series: {
+                lines: {
+                    show: true
+                }
+            }
+        });
+        alert('end');
+    };
+    //var d1 = [];
+    //for (var i = 0; i < 14; i += 0.5) {
+    //    d1.push([i, Math.sin(i)]);
+    //};
+    //$.plot('#dialog_plot', d1, {
+    //    series: {
+    //        lines: {
+    //            show: true
+    //        }
+    //    }
+    //});
+
+    $(document).ready(function (e) {
+        $.getScript("http://code.jquery.com/ui/1.12.0/jquery-ui.min.js", function (data, textStatus, jqxhr) {
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+	$(function() {
+
+		var d1 = [];
+		for (var i = 0; i < 14; i += 0.5) {
+			d1.push([i, Math.sin(i)]);
+		}
+
+		var d2 = [[0, 3], [4, 8], [8, 5], [9, 13]];
+
+		var d3 = [];
+		for (var i = 0; i < 14; i += 0.5) {
+			d3.push([i, Math.cos(i)]);
+		}
+
+		var d4 = [];
+		for (var i = 0; i < 14; i += 0.1) {
+			d4.push([i, Math.sqrt(i * 10)]);
+		}
+
+		var d5 = [];
+		for (var i = 0; i < 14; i += 0.5) {
+			d5.push([i, Math.sqrt(i)]);
+		}
+
+		var d6 = [];
+		for (var i = 0; i < 14; i += 0.5 + Math.random()) {
+			d6.push([i, Math.sqrt(2*i + Math.sin(i) + 5)]);
+		}
+
+		$.plot("#placeholder", [{
+			data: d1,
+			lines: { show: true, fill: true }
+		}, {
+			data: d2,
+			bars: { show: true }
+		}, {
+			data: d3,
+			points: { show: true }
+		}, {
+			data: d4,
+			lines: { show: true }
+		}, {
+			data: d5,
+			lines: { show: true },
+			points: { show: true }
+		}, {
+			data: d6,
+			lines: { show: true, steps: true }
+		}]);
+
+		// Add the Flot version string to the footer
+
+		$("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
+	});
+
+</script>

@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Test5";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2>Test5</h2>
+
+<link rel="stylesheet" href="//openlayers.org/en/v3.16.0/css/ol.css">
+@*<link rel="stylesheet" href="style.css" />*@
+@*<link href="~/Views/Maps/style.css" rel="stylesheet" />*@
+
+<div id="map" class="map"></div>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="//openlayers.org/en/v3.16.0/build/ol.js"></script>
+
+<script>
+    var map = new ol.Map({
+        target: 'map',
+        view: new ol.View({
+            center: [7500000, 6200000],
+            zoom: 5
+        }),
+        layers: [
+          new ol.layer.Tile({
+              source: new ol.source.MapQuest({ layer: 'osm' })
+          })
+        ]
+    });
+
+    var whales = {}, layers = {};
+
+    function processMarkers() {
+        alert('processMarkers');
+    };
+
+    var url = "http://geoserver.info.tm:8080/geoserver/localhost/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=localhost:admpol1&outputFormat=text/javascript&format_options=callback:getJson";
+    $.ajax({
+        jsonp: false,
+        jsonpCallback: 'getJson',
+        type: 'GET',
+        url: url,
+        async: false,
+        dataType: 'jsonp',
+        success: function (data) {
+            layers['test'] = new ol.layer.Vector({
+                source: new ol.source.Vector({
+                    features: (new ol.format.GeoJSON()).readFeatures(data, {
+                        featureProjection: 'EPSG:3857'
+                    })
+                })
+            });
+            map.addLayer(layers['test']);
+        }
+    });
+</script>

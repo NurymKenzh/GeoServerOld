@@ -1,0 +1,1143 @@
+﻿
+@{
+    ViewBag.Title = "ТБО";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/ol.css" rel="stylesheet" />
+<script src="~/Scripts/ol.js"></script>
+
+@*<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.16.0/ol.css" type="text/css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.16.0/ol.js"></script>
+<link rel="stylesheet" href="overviewmap-custom-drag.css">
+
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<script src="~/Scripts/jquery-1.12.4.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.0.js"></script>
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+
+<script src="~/Scripts/jquery.flot.js"></script>
+<script src="~/Scripts/jquery.flot.resize.js"></script>
+<script src="~/Scripts/jquery.flot.pie.js"></script>*@
+
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.12.4.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.0.js"></script>
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+
+<script src="~/Scripts/jquery.flot.js"></script>
+<script src="~/Scripts/jquery.flot.resize.js"></script>
+<script src="~/Scripts/jquery.flot.pie.js"></script>
+
+<style>
+    .toppanel {
+        height: 100px;
+        /*background-color: #366092;*/
+    }
+
+    .sidepanel {
+        background: #d2d2d2;
+        width: 350px;
+        height: 100%;
+        float: right;
+        overflow: auto;
+    }
+
+    .map {
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .mapsidepanel {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .sidepanel-hide {
+        top: .5em;
+        right: .5em;
+    }
+
+    .ol-custom-overviewmap,
+    .ol-custom-overviewmap.ol-uncollapsible {
+        bottom: auto;
+        left: auto;
+        right: .5em;
+        top: 2.5em;
+    }
+
+        .ol-custom-overviewmap:not(.ol-collapsed) {
+            border: 1px solid black;
+        }
+
+        .ol-custom-overviewmap .ol-overviewmap-map {
+            border: none;
+        }
+
+        .ol-custom-overviewmap .ol-overviewmap-box {
+            border: 1px solid;
+            cursor: pointer;
+        }
+
+        .ol-custom-overviewmap:not(.ol-collapsed) button {
+            bottom: auto;
+            left: auto;
+            right: 1px;
+            top: 1px;
+        }
+
+    .ol-rotate {
+        top: 170px;
+        right: 0;
+    }
+
+    .ol-attribution ul {
+        font-size: auto;
+    }
+
+    .toolbutton {
+        width: 39px;
+        height: 40px;
+        margin: 6px;
+        float: right;
+        border-radius: 4px;
+    }
+
+    #layertree li > span {
+        cursor: pointer;
+        color: #444444;
+    }
+
+    .show {
+        font-weight: normal;
+        display: block;
+    }
+
+    .transparancy {
+        font-weight: normal;
+    }
+
+    .split {
+        height: 40px;
+        background-color: #366092;
+        color: #ffffff;
+        cursor: pointer;
+        /*border-width: 2px;
+            border-color: aqua;*/
+        border: 1px solid black;
+        border-color: #d2d2d2;
+    }
+
+    .split_label {
+        margin: 8px;
+    }
+
+    .info {
+        color: #ff0000;
+    }
+
+
+    /*body {
+        margin:50px;
+    }*/
+    .tooltip {
+        position: absolute;
+        z-index: 1020;
+        display: block;
+        padding: 5px;
+        font-size: 11px;
+        visibility: visible;
+        margin-top: -2px;
+        bottom: 120%;
+        margin-left: -2em;
+    }
+
+        .tooltip .tooltip-arrow {
+            bottom: 0;
+            left: 50%;
+            margin-left: -5px;
+            border-top: 5px solid #000000;
+            border-right: 5px solid transparent;
+            border-left: 5px solid transparent;
+            position: absolute;
+            width: 0;
+            height: 0;
+        }
+
+    .tooltip-inner {
+        max-width: 200px;
+        padding: 3px 8px;
+        color: #ffffff;
+        text-align: center;
+        text-decoration: none;
+        background-color: #000000;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+    }
+
+    .ui-slider {
+        background: black repeat-x bottom left;
+        border-bottom: 1px solid #EBEAE5;
+        height: 15px;
+        margin: 0;
+        padding: 0px;
+    }
+
+    .ui-slider-handle {
+        background: #ED6B51;
+        border-bottom: 1px solid #a8a79f;
+        border-right: 1px solid #a8a79f;
+        height: 20px;
+        width: 10px;
+        margin: 0;
+        padding: 0px;
+        display: inline-block;
+    }
+
+    .ui-slider-range {
+        height: 10px;
+        border-bottom: 3px solid red;
+        position: relative;
+    }
+
+    .ui-slider-handle {
+        background: #ED6B51 !important;
+        border-bottom: 1px solid #a8a79f !important;
+        border-right: 1px solid #a8a79f !important;
+        height: 20px !important;
+        width: 10px !important;
+        margin: 0 !important;
+        padding: 0px !important;
+        display: inline-block !important;
+        top: -4px !important;
+    }
+</style>
+
+<div id="main">
+    <div class="toppanel" style="background: #366092 url(../Images/Logos/Logo1.png) no-repeat top left; background-size: contain;">
+        <div style="float: right;">
+            <div align="right" style="height: 40px;">
+                <label style="padding: 10px; color: white;">
+                    ТБО
+                </label>
+            </div>
+            <div>
+                <input type="button" id="button_overview" title="@GeoServer.Resources.Interface.OverviewMap" class="btn btn-default" onclick="ShowHideOverviewMap()" style="background: url(../Images/Buttons/MapOverview.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
+                <input type="button" title="@GeoServer.Resources.Interface.Layers" class="btn btn-default" onclick="ShowLayers()" style="background: url(../Images/Buttons/Layers.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
+                <input type="button" title="@GeoServer.Resources.Interface.ToHome" class="btn btn-default" onclick="ToHome()" style="background: url(../Images/Buttons/Home.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
+                <input type="button" title="Информация" class="btn btn-default" onclick="Info()" style="background: url(../Images/Buttons/CropCondition.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
+                <input type="button" title="Легенда" class="btn btn-default" onclick="Legend()" style="background: url(../Images/Buttons/Info.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
+                @Html.DropDownList("MapSources", (IEnumerable<SelectListItem>)ViewBag.MapSources, htmlAttributes: new { @id = "MapSources", @class = "form-control", @style = "float: right; margin: 6px; width: 180px;", @onchange = "ChangeMapSource(this.value)" })
+                @Html.DropDownList("Year", Enumerable.Range(2006, 11).Select(i => new SelectListItem { Value = i.ToString(), Text = i.ToString(), Selected = i == 2016 }), new { @Id = "Year", @class = "form-control", @style = "float: right; margin: 6px; width: 180px;", @onchange = "ChangeYear(this.value)" })
+            </div>
+        </div>
+    </div>
+    <div class="mapsidepanel" id="mapsidepanel">
+        <div id="sidepanel" class="sidepanel">
+            @* Слои *@
+            <div class="split" id="title_layers">
+                <label class="split_label">
+                    <u>
+                        @GeoServer.Resources.Interface.Layers
+                    </u>
+                </label>
+            </div>
+            <div id="layertree" style="margin-top: 10px;">
+                <ul>
+                    <li>
+                        <span>
+                            <label>
+                                <u>
+                                    @GeoServer.Resources.Interface.BaseLayers
+                                </u>
+                            </label>
+                        </span>
+                        <fieldset id="layer">
+                            <label class="checkbox" for="visible0">
+                                <input id="visible0" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                            </label>
+                            <label>@GeoServer.Resources.Interface.Transparency</label>
+                            <input class="opacity" type="range" min="0" max="100" step="1" />
+                        </fieldset>
+                    </li>
+                    <li>
+                        <span>
+                            <label>
+                                <u>
+                                    Буферные зоны
+                                </u>
+                            </label>
+                        </span>
+                        <fieldset id="layer1">
+                            <label class="checkbox" for="visible1">
+                                <input id="visible1" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                            </label>
+                            <label>@GeoServer.Resources.Interface.Transparency</label>
+                            <input class="opacity" type="range" min="0" max="100" step="1" />
+                        </fieldset>
+                    </li>
+                    <li>
+                        <span>
+                            <label>
+                                <u>
+                                    ТБО
+                                </u>
+                            </label>
+                        </span>
+                        <fieldset id="layer2">
+                            <label class="checkbox" for="visible2">
+                                <input id="visible2" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                            </label>
+                            <label>@GeoServer.Resources.Interface.Transparency</label>
+                            <input class="opacity" type="range" min="0" max="100" step="1" />
+                        </fieldset>
+                    </li>
+                    <li>
+                        <span>
+                            <label>
+                                <u>
+                                    Дороги
+                                </u>
+                            </label>
+                        </span>
+                        <fieldset id="layer3">
+                            <label class="checkbox" for="visible3">
+                                <input id="visible3" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                            </label>
+                            <label>@GeoServer.Resources.Interface.Transparency</label>
+                            <input class="opacity" type="range" min="0" max="100" step="1" />
+                        </fieldset>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="map" id="map_swipe">
+            <input id="swipe" type="range" style="width: 100%; max-width: 100%;" value="100" hidden="hidden">
+            <div id="map" class="map" style="height: 100%;">
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<h2>MSW</h2>*@
+
+@*<input type="button" onclick="Test()" value="Test"/>*@
+
+@* Окно информации об объекте *@
+<div id="dialog_info" title="@GeoServer.Resources.Interface.ObjectInfo" hidden="hidden">
+    <table>
+        <tr>
+            <td>
+                Объект
+            </td>
+            <td id="layer_name" style="padding-left: 10px;"></td>
+        </tr>
+        <tr id="tr_name" @*hidden="hidden"*@>
+            <td>
+                Месторасположение
+            </td>
+            <td id="name" style="padding-left: 10px;"></td>
+        </tr>
+        <tr>
+            <td>
+                Тип
+            </td>
+            <td id="class_id" style="padding-left: 10px;"></td>
+        </tr>
+        <tr>
+            <td>
+                Площадь (га)
+            </td>
+            <td id="area" style="padding-left: 10px;"></td>
+        </tr>
+        <tr>
+            <td>
+                Год
+            </td>
+            <td id="year" style="padding-left: 10px;"></td>
+        </tr>
+        <tr>
+            <td>
+                Динамика изменения площади
+            </td>
+            <td>
+                <input type="button" title="Информация" class="btn btn-default" onclick="Info()" style="background: url(../Images/Buttons/CropCondition.png) no-repeat top left; background-size: contain; width: 39px; height: 40px; margin: 6px;" />
+            </td>
+        </tr>
+        <tr hidden="hidden">
+            <td id="type_id">
+            </td>
+            <td id="id" style="padding-left: 10px;"></td>
+        </tr>
+    </table>
+</div>
+
+
+@*<div id="dialog_plot" title="Изменение" hidden="hidden" style="box-sizing: content-box;">
+    
+</div>*@
+@* Окно диаграммы *@
+<div id="placeholder" title="Динамика изменения площади" style="width:600px;height:300px" hidden="hidden"></div>
+
+@* Окно легенды *@
+<div id="dialog_legend" title="Легенда" hidden="hidden" style="box-sizing: content-box;">
+    <img src="~/Images/Legend/MSW.jpg" style="width:300px;" />
+</div>
+
+<script>
+    var styles = new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: 'rgba(170, 170, 170, 1.0)',
+            width: 1
+        }),
+        fill: new ol.style.Fill({
+            color: 'rgba(255, 0, 0, 1.0)'
+        })
+    })
+
+    //// источник данных и слой object_tbo
+    //var Source_object_tbo = new ol.source.TileWMS({
+    //    url: 'http://localhost:8080/geoserver/localhost/wms?',
+    //    params: {
+    //        'LAYERS': 'localhost:object_tbo',
+    //        'VERSION': '1.1.0',
+    //        'FORMAT': 'image/png',
+    //        'TILED': true
+    //    },
+    //    serverType: 'geoserver'
+    //});
+    //var Layer_object_tbo =
+    //    new ol.layer.Tile({
+    //        source: Source_object_tbo,
+    //        style: styles
+    //    });
+
+    //// источник данных и слой tbobuffzonelin
+    //var Source_tbobuffzonelin = new ol.source.TileWMS({
+    //    url: 'http://localhost:8080/geoserver/localhost/wms?',
+    //    params: {
+    //        'LAYERS': 'localhost:tbobuffzonelin',
+    //        'VERSION': '1.1.0',
+    //        'FORMAT': 'image/png',
+    //        'TILED': true
+    //    },
+    //    serverType: 'geoserver'
+    //});
+    //var Layer_tbobuffzonelin =
+    //    new ol.layer.Tile({
+    //        source: Source_tbobuffzonelin,
+    //        style: styles
+    //    });
+
+    //// источник данных и слой tbobuffzonepol
+    //var Source_tbobuffzonepol = new ol.source.TileWMS({
+    //    url: 'http://localhost:8080/geoserver/localhost/wms?',
+    //    params: {
+    //        'LAYERS': 'localhost:tbobuffzonepol',
+    //        'VERSION': '1.1.0',
+    //        'FORMAT': 'image/png',
+    //        'TILED': true
+    //    },
+    //    serverType: 'geoserver'
+    //});
+    //var Layer_tbobuffzonepol =
+    //    new ol.layer.Tile({
+    //        source: Source_tbobuffzonepol,
+    //        style: styles
+    //    });
+
+    // слой OpenCycleMap
+    function transform(extent) {
+        return ol.proj.transformExtent(extent, 'EPSG:4326', 'EPSG:3857');
+    }
+    var Layer_OpenCycleMap = new ol.layer.Tile({
+        source: new ol.source.OSM({
+            url: 'http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png'
+        })
+    });
+
+    // вид
+    var view = new ol.View({
+        projection: 'EPSG:3857',
+        center: [7500000, 6200000],
+        zoom: 5
+    });
+
+    // правая панель
+    window.app = {};
+    var app = window.app;
+    app.ShowHideSidePanel = function (opt_options) {
+        var options = opt_options || {};
+        var button = document.createElement('button');
+        button.id = "sidepanelshowhide";
+        button.innerHTML = '«';
+        var this_ = this;
+        var handleShowHideSidePanel = function () {
+            if (document.getElementById("sidepanel").offsetWidth == 0) {
+                document.getElementById('sidepanel').setAttribute("style", "width:350px");
+                document.getElementById('sidepanel').setAttribute("style", "display:block");
+                button.innerHTML = '»';
+                map.updateSize();
+            }
+            else {
+                document.getElementById('sidepanel').setAttribute("style", "width:0px");
+                document.getElementById('sidepanel').setAttribute("style", "display:none");
+                button.innerHTML = '«';
+                map.updateSize();
+            }
+        };
+        button.addEventListener('click', handleShowHideSidePanel, false);
+        var element = document.createElement('div');
+        element.className = 'sidepanel-hide ol-unselectable ol-control';
+        element.appendChild(button);
+        ol.control.Control.call(this, {
+            element: element,
+            target: options.target
+        });
+    }
+    ol.inherits(app.ShowHideSidePanel, ol.control.Control);
+    function ShowSidePanel() {
+        //document.getElementById('sidepanel').setAttribute("style", "width:350px");
+        //document.getElementById("sidepanelshowhide").innerHTML = '»';
+        if (document.getElementById("sidepanel").offsetWidth == 0) {
+            document.getElementById('sidepanel').setAttribute("style", "width:350px");
+            document.getElementById('sidepanel').setAttribute("style", "display:block");
+            //button.innerHTML = '»';
+            document.getElementById('sidepanelshowhide').innerHTML = '»';
+            map.updateSize();
+        }
+        else {
+            document.getElementById('sidepanel').setAttribute("style", "width:0px");
+            document.getElementById('sidepanel').setAttribute("style", "display:none");
+            //button.innerHTML = '«';
+            document.getElementById('sidepanelshowhide').innerHTML = '«';
+            map.updateSize();
+        }
+        map.updateSize();
+    }
+
+
+    // элемент карты - информация
+    var attribution = new ol.control.Attribution({
+        collapsible: true,
+        label: 'i',
+        collapsed: true,
+        tipLabel: ''
+    });
+
+
+    // элемент zoom
+    var zoom = new ol.control.Zoom({
+        zoomInTipLabel: '',
+        zoomOutTipLabel: ''
+    });
+
+    // карта
+    var map = new ol.Map({
+        controls: ol.control.defaults({
+            attribution: false,
+            zoom: false
+        }).extend([
+            new ol.control.ScaleLine({ units: 'metric' }),
+          new app.ShowHideSidePanel(),
+          attribution,
+          zoom
+        ]),
+        layers: [
+            Layer_OpenCycleMap
+        ],
+        target: 'map',
+        view: view
+    });
+
+    //var styles = new ol.style.Style({
+    //    stroke: new ol.style.Stroke({
+    //        color: 'rgba(170, 170, 170, 1.0)',
+    //        width: 1
+    //    }),
+    //    fill: new ol.style.Fill({
+    //        color: 'rgba(255, 0, 0, 1.0)'
+    //    })
+    //})
+
+    var year = document.getElementById("Year").options[document.getElementById("Year").selectedIndex].value;
+
+    var tbobuffzonepol_object_id_1 = [255, 127, 127, 1];
+    var tbobuffzonepol_object_id_2 = [204, 173, 32, 1];
+    var tbobuffzonepol_object_id_3 = [241, 244, 199, 1];
+    var tbobuffzonepol_object_id_4 = [255, 255, 115, 1];
+    var tbobuffzonepol_object_id_5 = [253, 191, 111, 1];
+    var tbobuffzonepol_object_id_6 = [178, 223, 138, 1];
+    var tbobuffzonepol_object_id_7 = [176, 195, 206, 1];
+    var tbobuffzonepol_object_id_8 = [0, 0, 0, 1];
+    var tbobuffzonepol_object_id_9 = [97, 166, 227, 1];
+    var tbobuffzonepol_object_id_10 = [165, 191, 221, 1];
+    var tbobuffzonepol_object_id_11 = [214, 176, 227, 1];
+    var tbobuffzonepol_object_id_12 = [220, 130, 221, 1];
+
+    var object_ids = {
+        '1': tbobuffzonepol_object_id_1,
+        '2': tbobuffzonepol_object_id_2,
+        '3': tbobuffzonepol_object_id_3,
+        '4': tbobuffzonepol_object_id_4,
+        '5': tbobuffzonepol_object_id_5,
+        '6': tbobuffzonepol_object_id_6,
+        '7': tbobuffzonepol_object_id_7,
+        '8': tbobuffzonepol_object_id_8,
+        '9': tbobuffzonepol_object_id_9,
+        '10': tbobuffzonepol_object_id_10,
+        '11': tbobuffzonepol_object_id_11,
+        '12': tbobuffzonepol_object_id_12
+    };
+
+    var tbobuffzonepol_defaultStyle = new ol.style.Style({
+        //fill: new ol.style.Fill({
+        //    color: [250, 250, 250, 0]
+        //}),
+        //stroke: new ol.style.Stroke({
+        //    color: [220, 220, 220, 0],
+        //    width: 1
+        //})
+    });
+
+    var tbobuffzonepol_styleCache = {};
+
+    function tbobuffzonepolstyleFunction(feature, resolution) {
+        var object_id = feature.get('object_id');
+        var feature_year = feature.get('year_');
+        if (!object_id || !object_ids[object_id] || feature_year != year) {
+            return [tbobuffzonepol_defaultStyle];
+        }
+        if (!tbobuffzonepol_styleCache[object_id]) {
+            tbobuffzonepol_styleCache[object_id] = new ol.style.Style({
+                fill: new ol.style.Fill({
+                    color: object_ids[object_id]
+                }),
+                stroke: new ol.style.Stroke({
+                    color: [220, 220, 220, 1],
+                    width: 1
+                })
+            });
+        }
+        return [tbobuffzonepol_styleCache[object_id]];
+    };
+
+
+
+    var object_tbo_class_id_1 = [255, 0, 0, 1];
+    var object_tbo_class_id_2 = [255, 0, 0, 1];
+    var object_tbo_class_id_3 = [255, 0, 0, 1];
+    var object_tbo_class_id_4 = [255, 0, 0, 1];
+    var object_tbo_class_id_5 = [255, 0, 0, 1];
+
+    var class_ids = {
+        '1': object_tbo_class_id_1,
+        '2': object_tbo_class_id_2,
+        '3': object_tbo_class_id_3,
+        '4': object_tbo_class_id_4,
+        '5': object_tbo_class_id_5
+    };
+
+    var object_tbo_defaultStyle = new ol.style.Style({
+        //fill: new ol.style.Fill({
+        //    color: [250, 250, 250, 0]
+        //}),
+        //stroke: new ol.style.Stroke({
+        //    color: [220, 220, 220, 0],
+        //    width: 1
+        //})
+    });
+
+    var object_tbo_styleCache = {};
+
+    function object_tbostyleFunction(feature, resolution) {
+        var class_id = feature.get('class_id');
+        var feature_year = feature.get('invest_yea');
+        if (!class_id || !class_ids[class_id] || feature_year != year) {
+            return [object_tbo_defaultStyle];
+        }
+        if (!object_tbo_styleCache[class_id]) {
+            object_tbo_styleCache[class_id] = new ol.style.Style({
+                fill: new ol.style.Fill({
+                    color: class_ids[class_id]
+                }),
+                stroke: new ol.style.Stroke({
+                    color: [255, 0, 0, 1],
+                    width: 2
+                })
+            });
+        }
+        return [object_tbo_styleCache[class_id]];
+    };
+
+    var styles3 = new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: 'rgba(220, 220, 220, 1.0)',
+            width: 2
+        })
+    })
+
+    var Layer_object_tbo = new ol.layer.Vector();
+    var Layer_tbobuffzonelin = new ol.layer.Vector();
+    //var Source_object_tbo = new ol.source.Vector({});
+    //var Layer_object_tbo = new ol.layer.Vector({
+    //    source: Source_object_tbo,
+    //    style: styles
+    //});
+    // векторный слой областей
+    var Layer_tbobuffzonepol = new ol.layer.Vector();
+    var url1 = "http://localhost:8080/geoserver/localhost/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=localhost:tbobuffzonepol&outputFormat=text/javascript&format_options=callback:getJson";
+    $.ajax({
+        jsonp: false,
+        jsonpCallback: 'getJson',
+        type: 'GET',
+        url: url1,
+        async: false,
+        dataType: 'jsonp',
+        success: function (data) {
+            Layer_tbobuffzonepol = new ol.layer.Vector({
+                source: new ol.source.Vector({
+                    features: (new ol.format.GeoJSON()).readFeatures(data, {
+                        featureProjection: 'EPSG:3857'
+                    })
+                }),
+                style: tbobuffzonepolstyleFunction
+            });
+
+            // векторный слой районов
+            var url2 = "http://localhost:8080/geoserver/localhost/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=localhost:object_tbo&outputFormat=text/javascript&format_options=callback:getJson";
+            $.ajax({
+                jsonp: false,
+                jsonpCallback: 'getJson',
+                type: 'GET',
+                url: url2,
+                async: false,
+                dataType: 'jsonp',
+                success: function (data) {
+                    Layer_object_tbo = new ol.layer.Vector({
+                        source: new ol.source.Vector({
+                            features: (new ol.format.GeoJSON()).readFeatures(data, {
+                                featureProjection: 'EPSG:3857'
+                            })
+                        }),
+                        style: object_tbostyleFunction
+                    });
+
+                    // векторный слой районов
+                    var url3 = "http://localhost:8080/geoserver/localhost/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=localhost:tbobuffzonelin&outputFormat=text/javascript&format_options=callback:getJson";
+                    $.ajax({
+                        jsonp: false,
+                        jsonpCallback: 'getJson',
+                        type: 'GET',
+                        url: url3,
+                        async: false,
+                        dataType: 'jsonp',
+                        success: function (data) {
+                            Layer_tbobuffzonelin = new ol.layer.Vector({
+                                source: new ol.source.Vector({
+                                    features: (new ol.format.GeoJSON()).readFeatures(data, {
+                                        featureProjection: 'EPSG:3857'
+                                    })
+                                }),
+                                style: styles3
+                            });
+                            Layer_tbobuffzonepol.set('name', 'Layer_tbobuffzonepol');
+                            Layer_object_tbo.set('name', 'Layer_object_tbo');
+                            Layer_tbobuffzonelin.set('name', 'Layer_tbobuffzonelin');
+                            map.addLayer(Layer_tbobuffzonepol);
+                            map.addLayer(Layer_object_tbo);
+                            map.addLayer(Layer_tbobuffzonelin);
+
+                            function bindInputs(layerid, layer) {
+                                var visibilityInput = $(layerid + ' input.visible');
+                                visibilityInput.on('change', function () {
+                                    layer.setVisible(this.checked);
+                                });
+                                visibilityInput.prop('checked', layer.getVisible());
+
+                                var opacityInput = $(layerid + ' input.opacity');
+                                opacityInput.on('input change', function () {
+                                    layer.setOpacity(parseFloat(this.value / 100));
+                                });
+                                opacityInput.val(String(layer.getOpacity() * 100));
+                            }
+
+                            map.getLayers().forEach(function (layer, i) {
+                                bindInputs('#layer' + i, layer);
+                                if (layer instanceof ol.layer.Group) {
+                                    layer.getLayers().forEach(function (sublayer, j) {
+                                        bindInputs('#layer' + i + j, sublayer);
+                                    });
+                                }
+                                else {
+
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
+
+    ///////////////////////////////////////////
+    //var select = null;
+    //var selectClick = new ol.interaction.Select({
+    //    condition: ol.events.condition.click
+    //});
+    //select = selectClick;
+    //map.addInteraction(select);
+    //select.on('select', function (e) {
+    //    if (e.target.getFeatures().getLength() > 0) {
+    //        alert(e.target.getFeatures()[0]);
+    //    }
+    //});
+    //-----------------------------------------
+
+
+
+
+
+
+    //-----------------------------------------
+    ol.Feature.prototype.getLayer = function () {
+        var this_ = this, layer_;
+        var sameFeature = function (feature) {
+            return (this_ === feature) ? true : false;
+        };
+        map.getLayers().forEach(function (layer) {
+            var source = layer.getSource();
+            if (source instanceof ol.source.Vector) {
+                var features = source.getFeatures();
+                if (features.length > 0) {
+                    var found = features.some(sameFeature);
+                    if (found) {
+                        layer_ = layer;
+                    }
+                }
+            }
+        });
+
+        return layer_;
+    };
+
+
+    var select = new ol.interaction.Select({
+        condition: ol.events.condition.click
+    });
+    var selectedFeatures = select.getFeatures();
+    map.addInteraction(select);
+    select.on('select', function (evt) {
+        var feature = evt.selected[0];
+        //alert(feature.get('id'));
+
+        var layer = feature.getLayer();
+        //alert(layer.get('name'));
+        var layer_name = "";
+        var class_id = "";
+        if (layer.get('name') == "Layer_tbobuffzonepol") {
+            layer_name = "Буферная зона";
+            document.getElementById("type_id").innerHTML = feature.get('object_id');
+            document.getElementById("id").innerHTML = feature.get('id');
+            document.getElementById("tr_name").style.visibility = "hidden";
+            document.getElementById("area").innerHTML = feature.get('shape_area') / 10000;
+            document.getElementById("year").innerHTML = feature.get('year_');
+            if (feature.get('object_id') == "1") {
+                class_id = "Полигон ТБО";
+            }
+            if (feature.get('object_id') == "2") {
+                class_id = "Граница полигона ТБО";
+            }
+            if (feature.get('object_id') == "3") {
+                class_id = "Участки земли с зональной и интразональной растительностью, нарушенной в слабо, средне и сильной степени";
+            }
+            if (feature.get('object_id') == "4") {
+                class_id = "Агросистемы (сельскохозяйственные поля, лесопосадки) с полностью измененным флористическим составом и структурой, с незначительным участием видов аборигенной флоры; способные к самовосстановлению при прекращении использования более чем через 20-30 лет";
+            }
+            if (feature.get('object_id') == "5") {
+                class_id = "Населенные пункты";
+            }
+            if (feature.get('object_id') == "6") {
+                class_id = "Селитебные объекты с безвозвратно трансформированной растительностью";
+            }
+            if (feature.get('object_id') == "7") {
+                class_id = "Железные дороги";
+            }
+            if (feature.get('object_id') == "8") {
+                class_id = "Автомобильные дороги (асфальтированные и грунтовые)";
+            }
+            if (feature.get('object_id') == "9") {
+                class_id = "Реки и озера";
+            }
+            if (feature.get('object_id') == "10") {
+                class_id = "Гидрографические сооружения (каналы, арыки)";
+            }
+            if (feature.get('object_id') == "11") {
+                class_id = "Пруды";
+            }
+            if (feature.get('object_id') == "12") {
+                class_id = "Отстойники";
+            }
+        }
+        if (layer.get('name') == "Layer_object_tbo") {
+            layer_name = "ТБО";
+            document.getElementById("type_id").innerHTML = feature.get('class_id');
+            document.getElementById("id").innerHTML = feature.get('id');
+            document.getElementById("tr_name").style.visibility = "visible";
+            document.getElementById("name").innerHTML = feature.get('name');
+            document.getElementById("area").innerHTML = feature.get('shape_area')/10000;
+            document.getElementById("year").innerHTML = feature.get('invest_yea');
+            if (feature.get('class_id') == "1") {
+                class_id = "Рекультивируемые, имеющие постоянные границы с ограждением территории";
+            }
+            if (feature.get('class_id') == "2") {
+                class_id = "Рекультивируемые, но не имеющие полного ограждения по фактической границе, с выходом отходов за ее пределы";
+            }
+            if (feature.get('class_id') == "3") {
+                class_id = "Нерекультивируемые";
+            }
+            if (feature.get('class_id') == "4") {
+                class_id = "Несанкционированные";
+            }
+            if (feature.get('class_id') == "5") {
+                class_id = "Рекултивированные";
+            }
+        }
+
+        document.getElementById("layer_name").innerHTML = layer_name;
+        document.getElementById("class_id").innerHTML = class_id;
+        
+        
+
+        if (layer.get('name') != "Layer_tbobuffzonelin") {
+            $(function () {
+                $("#dialog_info").dialog({
+                    width: 410,
+                    height: 300,
+                    resizable: false,
+                });
+            });
+        }
+    });
+    ///////////////////////////////////////////
+    function Info() {
+        $(function () {
+            $("#placeholder").dialog({
+                width: 410,
+                height: 400,
+                resizable: false
+            });
+        });
+
+        var d1 = [];
+        //var d1 = [[10, 3], [4, 8], [8, 5], [9, 13]];
+
+        //alert('id: ' + document.getElementById("id").innerHTML + ', object_id: ' + document.getElementById("type_id").innerHTML);
+        if (document.getElementById("layer_name").innerHTML == "Буферная зона") {
+            Layer_tbobuffzonepol.getSource().getFeatures().forEach(function (feature) {
+                var id = feature.get('id');
+                var object_id = feature.get('object_id');
+                if ((id == document.getElementById("id").innerHTML) && (object_id == document.getElementById("type_id").innerHTML)) {
+
+                    //alert('year_: ' + feature.get('year_') + ', area: ' + feature.get('area'));
+                    d1.push([parseInt(feature.get('year_')), parseFloat(feature.get('shape_area')/10000)]);
+                }
+
+            });
+        }
+
+        if (document.getElementById("layer_name").innerHTML == "ТБО") {
+            //alert('id: ' + document.getElementById("id").innerHTML + ', object_id: ' + document.getElementById("type_id").innerHTML);
+            Layer_object_tbo.getSource().getFeatures().forEach(function (feature) {
+                var id = feature.get('id');
+                if ((id == document.getElementById("id").innerHTML)) {
+
+                    //alert('invest_yea: ' + feature.get('invest_yea') + ', area: ' + feature.get('area'));
+                    d1.push([parseInt(feature.get('invest_yea')), parseFloat(feature.get('shape_area') / 10000)]);
+                }
+
+            });
+        }
+
+        //if (document.getElementById("layer_name").innerHTML == "Буферная зона") {
+        //    for (var i = 0; i < Layer_tbobuffzonepol.getSource().getFeatures().length; i++) {
+        //        d1.push(i, Layer_tbobuffzonepol.getSource().getFeatures()[i].get('area'));
+        //    }
+        //}
+
+        $.plot("#placeholder", [{
+            data: d1,
+            bars: { show: true }
+        }]);
+    };
+
+
+    function bindInputs(layerid, layer) {
+        var visibilityInput = $(layerid + ' input.visible');
+        visibilityInput.on('change', function () {
+            layer.setVisible(this.checked);
+        });
+        visibilityInput.prop('checked', layer.getVisible());
+
+        var opacityInput = $(layerid + ' input.opacity');
+        opacityInput.on('input change', function () {
+            layer.setOpacity(parseFloat(this.value / 100));
+        });
+        opacityInput.val(String(layer.getOpacity() * 100));
+    }
+
+    map.getLayers().forEach(function (layer, i) {
+        bindInputs('#layer' + i, layer);
+        if (layer instanceof ol.layer.Group) {
+            layer.getLayers().forEach(function (sublayer, j) {
+                bindInputs('#layer' + i + j, sublayer);
+            });
+        }
+        else {
+
+        }
+    });
+
+    $('#layertree li > span').click(function () {
+        $(this).siblings('fieldset').toggle();
+    }).siblings('fieldset').hide();
+    $('#title_layers').click(function () {
+        $('#layertree').toggle();
+    })
+    $('#title_search').click(function () {
+        $('#search').toggle();
+    })
+    $('#title_legend').click(function () {
+        $('#legend').toggle();
+    })
+    function ShowLayers() {
+        ShowSidePanel();
+        //$('#layertree').show();
+    }
+
+    // домой
+    function ToHome() {
+        map.getView().setCenter([7500000, 6200000]);
+        map.getView().setZoom(5);
+        $("#MapSources").val("OpenCycleMap");
+        var Source = new ol.source.OSM({
+            url: 'http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png'
+        });
+        //Layer_OpenCycleMap.setSource(Source);
+        //Source_bufer_cato.clear();
+        //$("#catoobl").val("");
+        //$("#catoray").empty();
+    }
+
+    // смена базового слоя
+    function ChangeMapSource(val) {
+        if (val == 'OpenStreetMap') {
+            var Source = new ol.source.OSM({
+            });
+            Layer_OpenCycleMap.setSource(Source);
+        }
+        if (val == 'OpenCycleMap') {
+            var Source = new ol.source.OSM({
+                url: 'http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png'
+            });
+            Layer_OpenCycleMap.setSource(Source);
+        }
+        if (val == 'ArcGIS') {
+            var attribution = new ol.Attribution({
+                html: 'Tiles © <a href="http://services.arcgisonline.com/ArcGIS/' +
+                    'rest/services/World_Topo_Map/MapServer">ArcGIS</a>'
+            });
+            var Source = new ol.source.XYZ({
+                attributions: [attribution],
+                url: 'http://server.arcgisonline.com/ArcGIS/rest/services/' +
+                    'World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
+            });
+            Layer_OpenCycleMap.setSource(Source);
+        }
+        if (val == 'Bing') {
+            var Source = new ol.source.BingMaps({
+                key: 'AuCpOpisOefLFRJxHhYX01u4K3oIpFAaGDfh09KS7AtHqIhJ0gVEP3Ici8eruBaA',
+                imagerySet: 'Road'
+            });
+            Layer_OpenCycleMap.setSource(Source);
+        }
+    };
+
+    function ChangeYear(val) {
+        year = document.getElementById("Year").options[document.getElementById("Year").selectedIndex].value;
+
+        map.removeLayer(Layer_tbobuffzonelin);
+        map.removeLayer(Layer_object_tbo);
+        map.removeLayer(Layer_tbobuffzonepol);
+
+        Layer_object_tbo = new ol.layer.Vector({
+            source: Layer_object_tbo.getSource(),
+            style: object_tbostyleFunction
+        });
+        Layer_tbobuffzonepol = new ol.layer.Vector({
+            source: Layer_tbobuffzonepol.getSource(),
+            style: tbobuffzonepolstyleFunction
+        });
+
+        map.addLayer(Layer_tbobuffzonepol);
+        map.addLayer(Layer_object_tbo);
+        map.addLayer(Layer_tbobuffzonelin);
+    };
+
+    // окно легенды
+    function Legend() {
+        //if (dialog_legend_first) {
+            //dialog_legend_first = false;
+            $("#dialog_legend").dialog({
+                width: 400,
+                height: 500,
+                resizable: false
+            });
+        //}
+        //else {
+        //    $("#dialog_legend").dialog({});
+        //}
+    };
+
+    function Test() {
+        styles3 = new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: 'rgba(0, 0, 255, 1.0)',
+                width: 2
+            })
+        });
+        map.removeLayer(Layer_tbobuffzonelin);
+        Layer_tbobuffzonelin = new ol.layer.Vector({
+            source: Layer_tbobuffzonelin.getSource(),
+            style: styles3
+        });
+        map.addLayer(Layer_tbobuffzonelin);
+    };
+
+    $(document).ready(function (e) {
+
+        $.getScript("http://code.jquery.com/ui/1.11.3/jquery-ui.min.js", function (data, textStatus, jqxhr) {
+        });
+
+        // высота карты
+        $("#mapsidepanel").height($(window).height() - 260);
+        if ($("#mapsidepanel").height() < 730) {
+            $("#mapsidepanel").height(730);
+        }
+
+        //$("#map").height($("#map_swipe").height() - $("#swipe").height());
+        document.getElementById('sidepanel').setAttribute("style", "width:0px");
+        document.getElementById('sidepanel').setAttribute("style", "display:none");
+        map.updateSize();
+
+        $("#MapSources").val("OpenCycleMap");
+    });
+</script>

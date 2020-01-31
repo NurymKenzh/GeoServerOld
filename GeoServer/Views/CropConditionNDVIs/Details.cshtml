@@ -1,0 +1,43 @@
+﻿@model GeoServer.Models.CropConditionNDVI
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CropConditionNDVI</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CATO.AB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CATO.AB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CropConditionType.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CropConditionType.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

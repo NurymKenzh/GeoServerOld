@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = GeoServer.Resources.Interface.Calculate;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@GeoServer.Resources.Interface.Calculate</h2>
+
+@using (Html.BeginForm("Calculate", "NDVIs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal">
+        <input type="submit" value=@GeoServer.Resources.Interface.Calculate class="btn btn-default" />
+    </div>
+    <br />
+}
+
+@if (ViewBag.Report != null)
+{
+    if (ViewBag.Report != "")
+    {
+        @Html.Raw(ViewBag.Report)
+    }
+}
+
+<div>
+    @Html.ActionLink(GeoServer.Resources.Interface.BackToList, "Index")
+</div>

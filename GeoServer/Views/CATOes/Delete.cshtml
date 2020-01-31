@@ -1,0 +1,65 @@
+﻿@model GeoServer.Models.CATO
+
+@{
+    ViewBag.Title = GeoServer.Resources.Interface.Delete;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@GeoServer.Resources.Interface.Delete</h2>
+
+<h3>@GeoServer.Resources.Interface.AreYouSureYouWantToDeleteThis</h3>
+<div>
+    <h4>@GeoServer.Resources.CATOTexts.CATO</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EF)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EF)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HIJ)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HIJ)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="@GeoServer.Resources.Interface.Delete" class="btn btn-default" /> |
+            @Html.ActionLink(GeoServer.Resources.Interface.BackToList, "Index")
+        </div>
+    }
+</div>

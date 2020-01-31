@@ -1,0 +1,50 @@
+﻿@model PagedList.IPagedList<GeoServer.Models.field>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create") | @Html.ActionLink("Update", "Update")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Raw("idfrommap")
+        </th>
+        @*<th>
+            @Html.Raw("adm2")
+        </th>*@
+        <th>
+            @Html.Raw("CATO")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.idfrommap)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.adm2)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.CATO.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.gid }) |
+            @Html.ActionLink("Details", "Details", new { id=item.gid }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.gid })
+        </td>
+    </tr>
+}
+
+</table>
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions() { PageCountAndCurrentLocationFormat = "{0} / {1}", DisplayPageCountAndCurrentLocation = true })

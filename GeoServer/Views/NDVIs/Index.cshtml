@@ -1,0 +1,100 @@
+﻿@model PagedList.IPagedList<GeoServer.Models.NDVI>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "NDVI";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>NDVI</h2>
+
+<p>
+    @Html.ActionLink(GeoServer.Resources.Interface.CreateNew, "Create") @Html.ActionLink(GeoServer.Resources.Interface.Calculate, "Calculate")
+</p>
+@using (Html.BeginForm("Index", "NDVIs", new { SortOrder = Request.QueryString["SortOrder"], fieldgid = ViewBag.fieldgidFilter, Year = ViewBag.YearFilter, Month = ViewBag.MonthFilter, Day = ViewBag.DayFilter }, FormMethod.Get))
+{
+    <table class="table">
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.field.gid)*@
+                @Html.ActionLink(GeoServer.Resources.FieldTexts.Field, "Index", new { SortOrder = ViewBag.fieldgidSort, fieldgid = ViewBag.fieldgidFilter, Year = ViewBag.YearFilter, Month = ViewBag.MonthFilter, Day = ViewBag.DayFilter })
+                <br />
+                @Html.Editor("fieldgid", null, new { htmlAttributes = new { @class = "form-control" }, value = "" })
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Date)*@
+                @Html.ActionLink(GeoServer.Resources.NDVITexts.Date, "Index", new { SortOrder = ViewBag.DateSort, fieldgid = ViewBag.fieldgidFilter, Year = ViewBag.YearFilter, Month = ViewBag.MonthFilter, Day = ViewBag.DayFilter })
+                <br />
+                @Html.DropDownList("Year", Enumerable.Range(2000, 31).Select(i => new SelectListItem { Value = i.ToString(), Text = i.ToString() }), "", new { @class = "form-control", @id = "Year" })
+                @Html.DropDownList("Month", Enumerable.Range(1, 12).Select(i => new SelectListItem { Value = i.ToString(), Text = System.Globalization.CultureInfo.CurrentUICulture.DateTimeFormat.GetMonthName(i) }), "", new { @class = "form-control", @id = "Month" })
+                @Html.DropDownList("Day", Enumerable.Range(1, 31).Select(i => new SelectListItem { Value = i.ToString(), Text = i.ToString() }), "", new { @class = "form-control", @id = "Day" })
+            </th>
+            @*<th>
+                @Html.Raw("Count")
+            </th>
+            <th>
+                @Html.Raw("Min")
+            </th>
+            <th>
+                @Html.Raw("Max")
+            </th>
+            <th>
+                @Html.Raw("Range")
+            </th>*@
+            <th>
+                @Html.Raw("Mean")
+            </th>
+            @*<th>
+                @Html.Raw("STD")
+            </th>
+            <th>
+                @Html.Raw("Sum")
+            </th>*@
+            <th>
+                <br />
+                <input type="submit" value=@GeoServer.Resources.Interface.Find class="btn btn-default">
+            </th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.field.gid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Min)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Max)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Range)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Mean)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.STD)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sum)
+            </td>*@
+            <td>
+                @Html.ActionLink(GeoServer.Resources.Interface.Edit, "Edit", new { id = item.Id }) |
+                @Html.ActionLink(GeoServer.Resources.Interface.Details, "Details", new { id = item.Id }) |
+                @Html.ActionLink(GeoServer.Resources.Interface.Delete, "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+    </table>
+}
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, SortOrder = Request.QueryString["SortOrder"], fieldgid = ViewBag.fieldgidFilter, Year = ViewBag.YearFilter, Month = ViewBag.MonthFilter, Day = ViewBag.DayFilter }), new PagedListRenderOptions() { PageCountAndCurrentLocationFormat = "{0} / {1}", DisplayPageCountAndCurrentLocation = true })

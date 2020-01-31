@@ -1,0 +1,1376 @@
+﻿@using GeoServer.Models
+
+@{
+    ViewBag.Title = "Ирригация";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/ol.css" rel="stylesheet" />
+<script src="~/Scripts/ol.js"></script>
+
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.16.0/ol.css" type="text/css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.16.0/ol.js"></script>
+<link rel="stylesheet" href="overviewmap-custom-drag.css">
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<style>
+        .toppanel {
+            height: 100px;
+            /*background-color: #366092;*/
+        }
+
+        .sidepanel {
+            background: #d2d2d2;
+            width: 350px;
+            height: 100%;
+            float: right;
+            overflow: auto;
+        }
+
+        .map {
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .mapsidepanel {
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        .sidepanel-hide {
+            top: .5em;
+            right: .5em;
+        }
+
+        .ol-custom-overviewmap,
+        .ol-custom-overviewmap.ol-uncollapsible {
+            bottom: auto;
+            left: auto;
+            right: .5em;
+            top: 2.5em;
+        }
+
+            .ol-custom-overviewmap:not(.ol-collapsed) {
+                border: 1px solid black;
+            }
+
+            .ol-custom-overviewmap .ol-overviewmap-map {
+                border: none;
+            }
+
+            .ol-custom-overviewmap .ol-overviewmap-box {
+                border: 1px solid;
+                cursor: pointer;
+            }
+
+            .ol-custom-overviewmap:not(.ol-collapsed) button {
+                bottom: auto;
+                left: auto;
+                right: 1px;
+                top: 1px;
+            }
+
+        .ol-rotate {
+            top: 170px;
+            right: 0;
+        }
+
+        .ol-attribution ul {
+            font-size: auto;
+        }
+
+        .toolbutton {
+            width: 39px;
+            height: 40px;
+            margin: 6px;
+            float: right;
+            border-radius: 4px;
+        }
+
+        #layertree li > span {
+            cursor: pointer;
+            color: #444444;
+        }
+
+        .show {
+            font-weight: normal;
+            display: block;
+        }
+
+        .transparancy {
+            font-weight: normal;
+        }
+
+        .split {
+            height: 40px;
+            background-color: #366092;
+            color: #ffffff;
+            cursor: pointer;
+            /*border-width: 2px;
+            border-color: aqua;*/
+            border: 1px solid black;
+            border-color: #d2d2d2;
+        }
+
+        .split_label {
+            margin: 8px;
+        }
+
+        .info {
+            color: #ff0000;
+        }
+
+
+        /*body {
+        margin:50px;
+    }*/
+        .tooltip {
+            position: absolute;
+            z-index: 1020;
+            display: block;
+            padding: 5px;
+            font-size: 11px;
+            visibility: visible;
+            margin-top: -2px;
+            bottom: 120%;
+            margin-left: -2em;
+        }
+
+            .tooltip .tooltip-arrow {
+                bottom: 0;
+                left: 50%;
+                margin-left: -5px;
+                border-top: 5px solid #000000;
+                border-right: 5px solid transparent;
+                border-left: 5px solid transparent;
+                position: absolute;
+                width: 0;
+                height: 0;
+            }
+
+        .tooltip-inner {
+            max-width: 200px;
+            padding: 3px 8px;
+            color: #ffffff;
+            text-align: center;
+            text-decoration: none;
+            background-color: #000000;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
+
+        .ui-slider {
+            background: black repeat-x bottom left;
+            border-bottom: 1px solid #EBEAE5;
+            height: 15px;
+            margin: 0;
+            padding: 0px;
+        }
+
+        .ui-slider-handle {
+            background: #ED6B51;
+            border-bottom: 1px solid #a8a79f;
+            border-right: 1px solid #a8a79f;
+            height: 20px;
+            width: 10px;
+            margin: 0;
+            padding: 0px;
+            display: inline-block;
+        }
+
+        .ui-slider-range {
+            height: 10px;
+            border-bottom: 3px solid red;
+            position: relative;
+        }
+
+        .ui-slider-handle {
+            background: #ED6B51 !important;
+            border-bottom: 1px solid #a8a79f !important;
+            border-right: 1px solid #a8a79f !important;
+            height: 20px !important;
+            width: 10px !important;
+            margin: 0 !important;
+            padding: 0px !important;
+            display: inline-block !important;
+            top: -4px !important;
+        }
+</style>
+
+@*<h2>Тестовая карта</h2>*@
+
+<div id="main">
+    <div class="toppanel" style="background: #366092 url(../Images/Logos/Logo1.png) no-repeat top left; background-size: contain;">
+        <div style="float: right;">
+            <div align="right" style="height: 40px;">
+                <label style="padding: 10px; color: white;">
+                    Ирригация
+                </label>
+            </div>
+            <div>
+                <input type="button" id="button_overview" title="@GeoServer.Resources.Interface.OverviewMap" class="btn btn-default" onclick="ShowHideOverviewMap()" style="background: url(../Images/Buttons/MapOverview.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
+                <input type="button" title="@GeoServer.Resources.Interface.Layers" class="btn btn-default" onclick="ShowLayers()" style="background: url(../Images/Buttons/Layers.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
+               <input type="button" title="@GeoServer.Resources.Interface.ToHome" class="btn btn-default" onclick="ToHome()" style="background: url(../Images/Buttons/Home.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
+                <input type="button" title="@GeoServer.Resources.Interface.Workspace" class="btn btn-default" onclick="Workspace()" style="background: url(../Images/Buttons/Workspace.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
+                <input type="button" title="Справочник" class="btn btn-default" style="background: url(../Images/Buttons/Info.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
+                @Html.DropDownList("MapSources", (IEnumerable<SelectListItem>)ViewBag.MapSources, htmlAttributes: new { @id = "MapSources", @class = "form-control", @style = "float: right; margin: 6px; width: 180px;", @onchange = "ChangeMapSource(this.value)" })
+            </div>
+        </div>
+    </div>
+    <div class="mapsidepanel" id="mapsidepanel">
+        <div id="sidepanel" class="sidepanel">
+            @* Слои *@
+            <div class="split" id="title_layers">
+                <label class="split_label">
+                    <u>
+                        @GeoServer.Resources.Interface.Layers
+                    </u>
+                </label>
+            </div>
+            @*<div id="layertree" style="margin-top: 10px;">
+                <ul>
+                    <li>
+                        <span>
+                            <label>
+                                <u>
+                                    @GeoServer.Resources.Interface.BaseLayers
+                                </u>
+                            </label>
+                        </span>
+                        <fieldset id="layer0">
+                            <label class="show" for="visible0">
+                                <input id="visible0" class="visible" type="checkbox" /> @GeoServer.Resources.Interface.Show
+                            </label>
+                            <label class="transparancy">
+                                @GeoServer.Resources.Interface.Transparency
+                            </label>
+                            <input class="opacity" type="range" min="0" max="100" step="1" />
+                        </fieldset>
+                    </li>
+                    <li>
+                        <span>
+                            <label>
+                                <u>
+                                    NDVI
+                                </u>
+                            </label>
+                        </span>
+                        <fieldset id="layer1">
+                            <label class="checkbox" for="visible1">
+                                <input id="visible1" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                            </label>
+                            <label>@GeoServer.Resources.Interface.Transparency</label>
+                            <input class="opacity" type="range" min="0" max="100" step="1" />
+                            <ul>
+                                <li>
+                                    <span>
+                                        <label>
+                                            <u>
+                                                LC150030154-122NDVI
+                                            </u>
+                                        </label>
+                                    </span>
+                                    <fieldset id="layer10">
+                                        <label class="checkbox" for="visible10">
+                                            <input id="visible10" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                                        </label>
+                                        <label>@GeoServer.Resources.Interface.Transparency</label>
+                                        <input class="opacity" type="range" min="0" max="100" step="1" />
+                                    </fieldset>
+                                </li>
+                                <li>
+                                    <span>
+                                        <label>
+                                            <u>
+                                                LC151030177-161NDVI
+                                            </u>
+                                        </label>
+                                    </span>
+                                    <fieldset id="layer11">
+                                        <label class="checkbox" for="visible11">
+                                            <input id="visible11" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                                        </label>
+                                        <label>@GeoServer.Resources.Interface.Transparency</label>
+                                        <input class="opacity" type="range" min="0" max="100" step="1" />
+                                    </fieldset>
+                                </li>
+                                <li>
+                                    <span>
+                                        <label>
+                                            <u>
+                                                LC153030191-159NDVI
+                                            </u>
+                                        </label>
+                                    </span>
+                                    <fieldset id="layer12">
+                                        <label class="checkbox" for="visible12">
+                                            <input id="visible12" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                                        </label>
+                                        <label>@GeoServer.Resources.Interface.Transparency</label>
+                                        <input class="opacity" type="range" min="0" max="100" step="1" />
+                                    </fieldset>
+                                </li>
+                                <li>
+                                    <span>
+                                        <label>
+                                            <u>
+                                                LC151030193-177NDVI
+                                            </u>
+                                        </label>
+                                    </span>
+                                    <fieldset id="layer13">
+                                        <label class="checkbox" for="visible13">
+                                            <input id="visible13" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                                        </label>
+                                        <label>@GeoServer.Resources.Interface.Transparency</label>
+                                        <input class="opacity" type="range" min="0" max="100" step="1" />
+                                    </fieldset>
+                                </li>
+                            </ul>
+                        </fieldset>
+                    </li>
+                </ul>
+            </div>*@
+            <div id="layertree" style="margin-top: 10px;">
+                <ul>
+                    <li>
+                        <span>
+                            <label>
+                                <u>
+                                    @GeoServer.Resources.Interface.BaseLayers
+                                </u>
+                            </label>
+                        </span>
+                        <fieldset id="layer0">
+                            <label class="checkbox" for="visible0">
+                                <input id="visible0" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                            </label>
+                            <label>@GeoServer.Resources.Interface.Transparency</label>
+                            <input class="opacity" type="range" min="0" max="100" step="1" />
+                        </fieldset>
+                    </li>
+                    <li>
+                        <span>
+                            <label>
+                                <u>
+                                    NDVI
+                                </u>
+                            </label>
+                        </span>
+                        <fieldset id="layer1">
+                            <label class="checkbox" for="visible1">
+                                <input id="visible1" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                            </label>
+                            <label>@GeoServer.Resources.Interface.Transparency</label>
+                            <input class="opacity" type="range" min="0" max="100" step="1" />
+                        </fieldset>
+                        <ul>
+                            <li>
+                                <span>
+                                    <label>
+                                        <u>
+                                            LC150030154-122NDVI
+                                        </u>
+                                    </label>
+                                </span>
+                                <fieldset id="layer10">
+                                    <label class="checkbox" for="visible10">
+                                        <input id="visible10" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                                    </label>
+                                    <label>@GeoServer.Resources.Interface.Transparency</label>
+                                    <input class="opacity" type="range" min="0" max="100" step="1" />
+                                </fieldset>
+                            </li>
+                            <li>
+                                <span>
+                                    <label>
+                                        <u>
+                                            LC151030177-161NDVI
+                                        </u>
+                                    </label>
+                                </span>
+                                <fieldset id="layer11">
+                                    <label class="checkbox" for="visible11">
+                                        <input id="visible11" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                                    </label>
+                                    <label>@GeoServer.Resources.Interface.Transparency</label>
+                                    <input class="opacity" type="range" min="0" max="100" step="1" />
+                                </fieldset>
+                            </li>
+                            <li>
+                                <span>
+                                    <label>
+                                        <u>
+                                            LC153030191-159NDVI
+                                        </u>
+                                    </label>
+                                </span>
+                                <fieldset id="layer12">
+                                    <label class="checkbox" for="visible12">
+                                        <input id="visible12" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                                    </label>
+                                    <label>@GeoServer.Resources.Interface.Transparency</label>
+                                    <input class="opacity" type="range" min="0" max="100" step="1" />
+                                </fieldset>
+                            </li>
+                            <li>
+                                <span>
+                                    <label>
+                                        <u>
+                                            LC151030193-177NDVI
+                                        </u>
+                                    </label>
+                                </span>
+                                <fieldset id="layer13">
+                                    <label class="checkbox" for="visible13">
+                                        <input id="visible13" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                                    </label>
+                                    <label>@GeoServer.Resources.Interface.Transparency</label>
+                                    <input class="opacity" type="range" min="0" max="100" step="1" />
+                                </fieldset>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span>
+                            <label>
+                                <u>
+                                    LST
+                                </u>
+                            </label>
+                        </span>
+                        <fieldset id="layer2">
+                            <label class="checkbox" for="visible2">
+                                <input id="visible2" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                            </label>
+                            <label>@GeoServer.Resources.Interface.Transparency</label>
+                            <input class="opacity" type="range" min="0" max="100" step="1" />
+                        </fieldset>
+                        <ul>
+                            <li>
+                                <span>
+                                    <label>
+                                        <u>
+                                            LC150030154-122LST
+                                        </u>
+                                    </label>
+                                </span>
+                                <fieldset id="layer20">
+                                    <label class="checkbox" for="visible20">
+                                        <input id="visible20" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                                    </label>
+                                    <label>@GeoServer.Resources.Interface.Transparency</label>
+                                    <input class="opacity" type="range" min="0" max="100" step="1" />
+                                </fieldset>
+                            </li>
+                            <li>
+                                <span>
+                                    <label>
+                                        <u>
+                                            LC151030177-161LST
+                                        </u>
+                                    </label>
+                                </span>
+                                <fieldset id="layer21">
+                                    <label class="checkbox" for="visible21">
+                                        <input id="visible21" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                                    </label>
+                                    <label>@GeoServer.Resources.Interface.Transparency</label>
+                                    <input class="opacity" type="range" min="0" max="100" step="1" />
+                                </fieldset>
+                            </li>
+                            <li>
+                                <span>
+                                    <label>
+                                        <u>
+                                            LC153030191-159LST
+                                        </u>
+                                    </label>
+                                </span>
+                                <fieldset id="layer22">
+                                    <label class="checkbox" for="visible22">
+                                        <input id="visible22" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                                    </label>
+                                    <label>@GeoServer.Resources.Interface.Transparency</label>
+                                    <input class="opacity" type="range" min="0" max="100" step="1" />
+                                </fieldset>
+                            </li>
+                            <li>
+                                <span>
+                                    <label>
+                                        <u>
+                                            LC151030193-177LST
+                                        </u>
+                                    </label>
+                                </span>
+                                <fieldset id="layer23">
+                                    <label class="checkbox" for="visible23">
+                                        <input id="visible23" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                                    </label>
+                                    <label>@GeoServer.Resources.Interface.Transparency</label>
+                                    <input class="opacity" type="range" min="0" max="100" step="1" />
+                                </fieldset>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span>
+                            <label>
+                                <u>
+                                    WC
+                                </u>
+                            </label>
+                        </span>
+                        <fieldset id="layer3">
+                            <label class="checkbox" for="visible3">
+                                <input id="visible3" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                            </label>
+                            <label>@GeoServer.Resources.Interface.Transparency</label>
+                            <input class="opacity" type="range" min="0" max="100" step="1" />
+                        </fieldset>
+                        <ul>
+                            <li>
+                                <span>
+                                    <label>
+                                        <u>
+                                            LC150030154-122WC
+                                        </u>
+                                    </label>
+                                </span>
+                                <fieldset id="layer30">
+                                    <label class="checkbox" for="visible30">
+                                        <input id="visible30" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                                    </label>
+                                    <label>@GeoServer.Resources.Interface.Transparency</label>
+                                    <input class="opacity" type="range" min="0" max="100" step="1" />
+                                </fieldset>
+                            </li>
+                            <li>
+                                <span>
+                                    <label>
+                                        <u>
+                                            LC151030177-161WC
+                                        </u>
+                                    </label>
+                                </span>
+                                <fieldset id="layer31">
+                                    <label class="checkbox" for="visible31">
+                                        <input id="visible31" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                                    </label>
+                                    <label>@GeoServer.Resources.Interface.Transparency</label>
+                                    <input class="opacity" type="range" min="0" max="100" step="1" />
+                                </fieldset>
+                            </li>
+                            <li>
+                                <span>
+                                    <label>
+                                        <u>
+                                            LC153030191-159WC
+                                        </u>
+                                    </label>
+                                </span>
+                                <fieldset id="layer32">
+                                    <label class="checkbox" for="visible32">
+                                        <input id="visible32" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                                    </label>
+                                    <label>@GeoServer.Resources.Interface.Transparency</label>
+                                    <input class="opacity" type="range" min="0" max="100" step="1" />
+                                </fieldset>
+                            </li>
+                            <li>
+                                <span>
+                                    <label>
+                                        <u>
+                                            LC151030193-177WC
+                                        </u>
+                                    </label>
+                                </span>
+                                <fieldset id="layer33">
+                                    <label class="checkbox" for="visible33">
+                                        <input id="visible33" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                                    </label>
+                                    <label>@GeoServer.Resources.Interface.Transparency</label>
+                                    <input class="opacity" type="range" min="0" max="100" step="1" />
+                                </fieldset>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span>
+                            <label>
+                                <u>
+                                    @GeoServer.Resources.FieldTexts.Fields
+                                </u>
+                            </label>
+                        </span>
+                        <fieldset id="layer4">
+                            <label class="checkbox" for="visible4">
+                                <input id="visible4" class="visible" type="checkbox" />@GeoServer.Resources.Interface.Show
+                            </label>
+                            <label>@GeoServer.Resources.Interface.Transparency</label>
+                            <input class="opacity" type="range" min="0" max="100" step="1" />
+                        </fieldset>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        @*<div id="map" class="map">
+            </div>*@
+        <div class="map" id="map_swipe">
+            <input id="swipe" type="range" style="width: 100%; max-width: 100%;" value="100" hidden="hidden">
+            <div id="map" class="map" style="height: 100%;">
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Окно информации об объекте *@
+<div id="dialog_info" title="@GeoServer.Resources.Interface.ObjectInfo" hidden="hidden">
+    <table>
+        <tr>
+            <td>
+                @GeoServer.Resources.CATOTexts.Location
+            </td>
+            <td id="location" style="padding-left: 10px;"></td>
+        </tr>
+        <tr>
+            <td>
+                2013
+            </td>
+            <td id="type_2013" style="padding-left: 10px;"></td>
+        </tr>
+        <tr>
+            <td>
+                2014
+            </td>
+            <td id="type_2014" style="padding-left: 10px;"></td>
+        </tr>
+        <tr>
+            <td>
+                2016
+            </td>
+            <td id="type_2016" style="padding-left: 10px;"></td>
+        </tr>
+    </table>
+</div>
+
+<script>
+
+
+    var styles = new ol.style.Style({
+        stroke: new ol.style.Stroke({
+            color: 'rgba(170, 170, 170, 1.0)',
+            width: 1
+        }),
+        fill: new ol.style.Fill({
+            color: 'rgba(255, 0, 0, 1.0)'
+        })
+    })
+
+    // буферный векторный слой полей
+    var Source_bufer = new ol.source.Vector({});
+    var Layer_bufer = new ol.layer.Vector({
+        source: Source_bufer,
+        style: new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: 'transparent'
+            }),
+            stroke: new ol.style.Stroke({
+                color: 'red',
+                width: 2
+            })
+        })
+    });
+
+    //// источник данных и слой mask_19
+    //var Source_mask_19 = new ol.source.TileWMS({
+    //    url: 'http://localhost:8080/geoserver/localhost/wms?',
+    //    params: {
+    //        'LAYERS': 'localhost:mask_19',
+    //        'VERSION': '1.1.0',
+    //        'FORMAT': 'image/png',
+    //        'TILED': true
+    //    },
+    //    serverType: 'geoserver'
+    //});
+    //var Layer_mask_19 =
+    //    new ol.layer.Tile({
+    //        source: Source_mask_19,
+    //        style: styles
+    //    });
+
+    //// источник данных и слой mask_31
+    //var Source_mask_31 = new ol.source.TileWMS({
+    //    url: 'http://localhost:8080/geoserver/localhost/wms?',
+    //    params: {
+    //        'LAYERS': 'localhost:mask_31',
+    //        'VERSION': '1.1.0',
+    //        'FORMAT': 'image/png',
+    //        'TILED': true
+    //    },
+    //    serverType: 'geoserver'
+    //});
+    //var Layer_mask_31 =
+    //    new ol.layer.Tile({
+    //        source: Source_mask_31,
+    //        style: styles
+    //    });
+
+    //// источник данных и слой mask_43
+    //var Source_mask_43 = new ol.source.TileWMS({
+    //    url: 'http://localhost:8080/geoserver/localhost/wms?',
+    //    params: {
+    //        'LAYERS': 'localhost:mask_43',
+    //        'VERSION': '1.1.0',
+    //        'FORMAT': 'image/png',
+    //        'TILED': true
+    //    },
+    //    serverType: 'geoserver'
+    //});
+    //var Layer_mask_43 =
+    //    new ol.layer.Tile({
+    //        source: Source_mask_43,
+    //        style: styles
+    //    });
+
+    //// источник данных и слой mask_51
+    //var Source_mask_51 = new ol.source.TileWMS({
+    //    url: 'http://localhost:8080/geoserver/localhost/wms?',
+    //    params: {
+    //        'LAYERS': 'localhost:mask_51',
+    //        'VERSION': '1.1.0',
+    //        'FORMAT': 'image/png',
+    //        'TILED': true
+    //    },
+    //    serverType: 'geoserver'
+    //});
+    //var Layer_mask_51 =
+    //    new ol.layer.Tile({
+    //        source: Source_mask_51,
+    //        style: styles
+    //    });
+
+    // источник данных и слой mask
+    var Source_mask = new ol.source.TileWMS({
+        url: 'http://localhost:8080/geoserver/localhost/wms?',
+        params: {
+            'LAYERS': 'localhost:maskpol',
+            'VERSION': '1.1.0',
+            'FORMAT': 'image/png',
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    });
+    var Layer_mask =
+        new ol.layer.Tile({
+            source: Source_mask,
+            style: styles
+        });
+
+    // источник данных и слой hdtlin
+    var Source_hdtlin = new ol.source.TileWMS({
+        url: 'http://localhost:8080/geoserver/localhost/wms?',
+        params: {
+            'LAYERS': 'localhost:hdtlin',
+            'VERSION': '1.1.0',
+            'FORMAT': 'image/png',
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    });
+    var Layer_hdtlin =
+        new ol.layer.Tile({
+            source: Source_hdtlin,
+            style: styles
+        });
+
+    // источник данных и слой 154_122LST_t
+    var Source_154_122LST_t = new ol.source.TileWMS({
+        url: 'http://localhost:8080/geoserver/localhost/wms?',
+        params: {
+            'LAYERS': 'localhost:154_122LST_t',
+            'VERSION': '1.1.0',
+            'FORMAT': 'image/png',
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    });
+    var Layer_154_122LST_t =
+        new ol.layer.Tile({
+            source: Source_154_122LST_t,
+            style: styles
+        });
+
+    // источник данных и слой 154_122NDVI_t
+    var Source_154_122NDVI_t = new ol.source.TileWMS({
+        url: 'http://localhost:8080/geoserver/localhost/wms?',
+        params: {
+            'LAYERS': 'localhost:154_122NDVI_t',
+            'VERSION': '1.1.0',
+            'FORMAT': 'image/png',
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    });
+    var Layer_154_122NDVI_t =
+        new ol.layer.Tile({
+            source: Source_154_122NDVI_t,
+            style: styles
+        });
+
+    // источник данных и слой 154_122WC_t
+    var Source_154_122WC_t = new ol.source.TileWMS({
+        url: 'http://localhost:8080/geoserver/localhost/wms?',
+        params: {
+            'LAYERS': 'localhost:154_122WC_t',
+            'VERSION': '1.1.0',
+            'FORMAT': 'image/png',
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    });
+    var Layer_154_122WC_t =
+        new ol.layer.Tile({
+            source: Source_154_122WC_t,
+            style: styles
+        });
+
+    // источник данных и слой 177_161LST_t
+    var Source_177_161LST_t = new ol.source.TileWMS({
+        url: 'http://localhost:8080/geoserver/localhost/wms?',
+        params: {
+            'LAYERS': 'localhost:177_161LST_t',
+            'VERSION': '1.1.0',
+            'FORMAT': 'image/png',
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    });
+    var Layer_177_161LST_t =
+        new ol.layer.Tile({
+            source: Source_177_161LST_t,
+            style: styles
+        });
+
+    // источник данных и слой 177_161NDVI_t
+    var Source_177_161NDVI_t = new ol.source.TileWMS({
+        url: 'http://localhost:8080/geoserver/localhost/wms?',
+        params: {
+            'LAYERS': 'localhost:177_161NDVI_t',
+            'VERSION': '1.1.0',
+            'FORMAT': 'image/png',
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    });
+    var Layer_177_161NDVI_t =
+        new ol.layer.Tile({
+            source: Source_177_161NDVI_t,
+            style: styles
+        });
+
+    // источник данных и слой 177_161WC_t
+    var Source_177_161WC_t = new ol.source.TileWMS({
+        url: 'http://localhost:8080/geoserver/localhost/wms?',
+        params: {
+            'LAYERS': 'localhost:177_161WC_t',
+            'VERSION': '1.1.0',
+            'FORMAT': 'image/png',
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    });
+    var Layer_177_161WC_t =
+        new ol.layer.Tile({
+            source: Source_177_161WC_t,
+            style: styles
+        });
+
+    // источник данных и слой 191_159_LST_t
+    var Source_191_159_LST_t = new ol.source.TileWMS({
+        url: 'http://localhost:8080/geoserver/localhost/wms?',
+        params: {
+            'LAYERS': 'localhost:191_159_LST_t',
+            'VERSION': '1.1.0',
+            'FORMAT': 'image/png',
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    });
+    var Layer_191_159_LST_t =
+        new ol.layer.Tile({
+            source: Source_191_159_LST_t,
+            style: styles
+        });
+
+    // источник данных и слой 191_159_NDVI_t
+    var Source_191_159_NDVI_t = new ol.source.TileWMS({
+        url: 'http://localhost:8080/geoserver/localhost/wms?',
+        params: {
+            'LAYERS': 'localhost:191_159_NDVI_t',
+            'VERSION': '1.1.0',
+            'FORMAT': 'image/png',
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    });
+    var Layer_191_159_NDVI_t =
+        new ol.layer.Tile({
+            source: Source_191_159_NDVI_t,
+            style: styles
+        });
+
+    // источник данных и слой 191_159_WC_t
+    var Source_191_159_WC_t = new ol.source.TileWMS({
+        url: 'http://localhost:8080/geoserver/localhost/wms?',
+        params: {
+            'LAYERS': 'localhost:191_159_WC_t',
+            'VERSION': '1.1.0',
+            'FORMAT': 'image/png',
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    });
+    var Layer_191_159_WC_t =
+        new ol.layer.Tile({
+            source: Source_191_159_WC_t,
+            style: styles
+        });
+
+    // источник данных и слой 193_177LST_t
+    var Source_193_177LST_t = new ol.source.TileWMS({
+        url: 'http://localhost:8080/geoserver/localhost/wms?',
+        params: {
+            'LAYERS': 'localhost:193_177LST_t',
+            'VERSION': '1.1.0',
+            'FORMAT': 'image/png',
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    });
+    var Layer_193_177LST_t =
+        new ol.layer.Tile({
+            source: Source_193_177LST_t,
+            style: styles
+        });
+
+    // источник данных и слой 193_177NDVI_e
+    var Source_193_177NDVI_e = new ol.source.TileWMS({
+        url: 'http://localhost:8080/geoserver/localhost/wms?',
+        params: {
+            'LAYERS': 'localhost:193_177NDVI_e',
+            'VERSION': '1.1.0',
+            'FORMAT': 'image/png',
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    });
+    var Layer_193_177NDVI_e =
+        new ol.layer.Tile({
+            source: Source_193_177NDVI_e,
+            style: styles
+        });
+
+    // источник данных и слой 193_177NDVI_t
+    var Source_193_177NDVI_t = new ol.source.TileWMS({
+        url: 'http://localhost:8080/geoserver/localhost/wms?',
+        params: {
+            'LAYERS': 'localhost:193_177NDVI_t',
+            'VERSION': '1.1.0',
+            'FORMAT': 'image/png',
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    });
+    var Layer_193_177NDVI_t =
+        new ol.layer.Tile({
+            source: Source_193_177NDVI_t,
+            style: styles
+        });
+
+    // источник данных и слой 193_177WC_t
+    var Source_193_177WC_t = new ol.source.TileWMS({
+        url: 'http://localhost:8080/geoserver/localhost/wms?',
+        params: {
+            'LAYERS': 'localhost:193_177WC_t',
+            'VERSION': '1.1.0',
+            'FORMAT': 'image/png',
+            'TILED': true
+        },
+        serverType: 'geoserver'
+    });
+    var Layer_193_177WC_t =
+        new ol.layer.Tile({
+            source: Source_193_177WC_t,
+            style: styles
+        });
+
+    // слой OpenCycleMap
+    function transform(extent) {
+        return ol.proj.transformExtent(extent, 'EPSG:4326', 'EPSG:3857');
+    }
+    var Layer_OpenCycleMap = new ol.layer.Tile({
+        source: new ol.source.OSM({
+            url: 'http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png'
+        })
+    });
+
+    // вид
+    var view = new ol.View({
+        projection: 'EPSG:3857',
+        center: [7500000, 6200000],
+        zoom: 5
+    });
+
+    // правая панель
+    window.app = {};
+    var app = window.app;
+    app.ShowHideSidePanel = function (opt_options) {
+        var options = opt_options || {};
+        var button = document.createElement('button');
+        button.id = "sidepanelshowhide";
+        button.innerHTML = '«';
+        var this_ = this;
+        var handleShowHideSidePanel = function () {
+            if (document.getElementById("sidepanel").offsetWidth == 0) {
+                document.getElementById('sidepanel').setAttribute("style", "width:350px");
+                document.getElementById('sidepanel').setAttribute("style", "display:block");
+                button.innerHTML = '»';
+                map.updateSize();
+            }
+            else {
+                document.getElementById('sidepanel').setAttribute("style", "width:0px");
+                document.getElementById('sidepanel').setAttribute("style", "display:none");
+                button.innerHTML = '«';
+                map.updateSize();
+            }
+        };
+        button.addEventListener('click', handleShowHideSidePanel, false);
+        var element = document.createElement('div');
+        element.className = 'sidepanel-hide ol-unselectable ol-control';
+        element.appendChild(button);
+        ol.control.Control.call(this, {
+            element: element,
+            target: options.target
+        });
+    }
+    ol.inherits(app.ShowHideSidePanel, ol.control.Control);
+    function ShowSidePanel() {
+        //document.getElementById('sidepanel').setAttribute("style", "width:350px");
+        //document.getElementById("sidepanelshowhide").innerHTML = '»';
+        if (document.getElementById("sidepanel").offsetWidth == 0) {
+            document.getElementById('sidepanel').setAttribute("style", "width:350px");
+            document.getElementById('sidepanel').setAttribute("style", "display:block");
+            //button.innerHTML = '»';
+            document.getElementById('sidepanelshowhide').innerHTML = '»';
+            map.updateSize();
+        }
+        else {
+            document.getElementById('sidepanel').setAttribute("style", "width:0px");
+            document.getElementById('sidepanel').setAttribute("style", "display:none");
+            //button.innerHTML = '«';
+            document.getElementById('sidepanelshowhide').innerHTML = '«';
+            map.updateSize();
+        }
+        map.updateSize();
+    }
+
+
+    // элемент карты - информация
+    var attribution = new ol.control.Attribution({
+        collapsible: true,
+        label: 'i',
+        collapsed: true,
+        tipLabel: ''
+    });
+
+
+    // элемент zoom
+    var zoom = new ol.control.Zoom({
+        zoomInTipLabel: '',
+        zoomOutTipLabel: ''
+    });
+
+    // карта
+    var map = new ol.Map({
+        controls: ol.control.defaults({
+            attribution: false,
+            zoom: false
+        }).extend([
+            new ol.control.ScaleLine({ units: 'metric' }),
+          new app.ShowHideSidePanel(),
+          attribution,
+          zoom
+        ]),
+        //layers: [
+        //    Layer_OpenCycleMap,
+
+        //    new ol.layer.Group({
+        //        layers: [
+        //            Layer_154_122NDVI_t,
+        //            Layer_177_161NDVI_t,
+        //            Layer_191_159_NDVI_t,
+        //            Layer_193_177NDVI_t]}),
+
+        //    //Layer_154_122LST_t,
+        //    //Layer_177_161LST_t,
+        //    //Layer_191_159_LST_t,
+        //    //Layer_193_177LST_t,
+
+        //    //Layer_154_122WC_t,
+        //    //Layer_177_161WC_t,
+        //    //Layer_191_159_WC_t,
+        //    //Layer_193_177WC_t,
+
+        //    Layer_mask_19,
+        //    Layer_mask_31,
+        //    Layer_mask_43,
+        //    Layer_mask_51
+        //],
+        layers: [
+            Layer_OpenCycleMap,
+            new ol.layer.Group({
+              layers: [
+                Layer_154_122NDVI_t,
+                Layer_177_161NDVI_t,
+                Layer_191_159_NDVI_t,
+                Layer_193_177NDVI_t]
+            }),
+            new ol.layer.Group({
+                layers: [
+                    Layer_154_122LST_t,
+                    Layer_177_161LST_t,
+                    Layer_191_159_LST_t,
+                    Layer_193_177LST_t]
+            }),
+            new ol.layer.Group({
+                layers: [
+                    Layer_154_122WC_t,
+                    Layer_177_161WC_t,
+                    Layer_191_159_WC_t,
+                    Layer_193_177WC_t]
+            }),
+            Layer_mask,
+            Layer_bufer,
+            Layer_hdtlin
+        ],
+
+        target: 'map',
+        view: view
+    });
+
+    // слои
+    //function bindInputs(layerid, layer) {
+    //    var visibilityInput = $(layerid + ' input.visible');
+    //    visibilityInput.on('change', function () {
+    //        layer.setVisible(this.checked);
+    //    });
+    //    visibilityInput.prop('checked', layer.getVisible());
+    //    var opacityInput = $(layerid + ' input.opacity');
+    //    opacityInput.on('input change', function () {
+    //        layer.setOpacity(parseFloat(this.value / 100));
+    //    });
+    //    opacityInput.val(String(layer.getOpacity() * 100));
+    //}
+    function bindInputs(layerid, layer) {
+        var visibilityInput = $(layerid + ' input.visible');
+        visibilityInput.on('change', function () {
+            layer.setVisible(this.checked);
+        });
+        visibilityInput.prop('checked', layer.getVisible());
+
+        var opacityInput = $(layerid + ' input.opacity');
+        opacityInput.on('input change', function () {
+            layer.setOpacity(parseFloat(this.value / 100));
+        });
+        opacityInput.val(String(layer.getOpacity() * 100));
+    }
+
+    map.getLayers().forEach(function (layer, i) {
+        bindInputs('#layer' + i, layer);
+        if (layer instanceof ol.layer.Group) {
+            layer.getLayers().forEach(function (sublayer, j) {
+                bindInputs('#layer' + i + j, sublayer);
+            });
+        }
+        else {
+
+        }
+    });
+
+    // первый вызов окна информации об объекте
+    var first_info = true;
+
+    // функция нажатия на карту
+    map.on('singleclick', function (evt) {
+
+        Source_bufer.clear();
+
+        var viewResolution = (view.getResolution());
+        document.getElementById("location").innerHTML = '';
+        document.getElementById("type_2013").innerHTML = '';
+        document.getElementById("type_2014").innerHTML = '';
+        document.getElementById("type_2016").innerHTML = '';
+        var url_mask = Source_mask.getGetFeatureInfoUrl(
+            evt.coordinate, viewResolution, 'EPSG:3857',
+            {
+                'INFO_FORMAT': 'text/javascript',
+                'propertyName': 'adm_2,type_2013,type_2014,type_2016,geom'
+            });
+        if (url_mask) {
+            // данные со слоев
+            jQuery.ajax({
+                jsonp: false,
+                jsonpCallback: 'getJson',
+                type: 'GET',
+                url: url_mask + "&format_options=callback:getJson",
+                async: false,
+                dataType: 'jsonp',
+                success: function (data) {
+                    
+                    // работа с полем в виде вектора
+                    var polyFeature = new ol.Feature({
+                        geometry: new ol.geom.MultiPolygon(data.features[0].geometry.coordinates)
+                    });
+                    Source_bufer.addFeature(polyFeature);
+                    
+                    
+
+                    // получение информации о поле
+                    $.ajax({
+                        url: '@Url.Action("GetMaskInfo")',
+                        data: JSON.stringify({
+                            "adm_2": data.features[0].properties.adm_2,
+                            "type_2013": data.features[0].properties.type_2013,
+                            "type_2014": data.features[0].properties.type_2014,
+                            "type_2016": data.features[0].properties.type_2016
+                        }),
+                        type: 'POST',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            //document.getElementById("fieldCATO").innerHTML = data.CATOName;
+                            document.getElementById("location").innerHTML = data.adm_2;
+                            document.getElementById("type_2013").innerHTML = data.type_2013;
+                            document.getElementById("type_2014").innerHTML = data.type_2014;
+                            document.getElementById("type_2016").innerHTML = data.type_2016;
+                        },
+                        error: function () {
+                        }
+                    });
+
+                    if (Source_bufer.getFeatures().length > 0) {
+                        if (first_info == true) {
+                            $(function () {
+                                $("#dialog_info").dialog({
+                                    width: 410,
+                                    height: 190,
+                                    resizable: false,
+                                });
+                            });
+                            first_info = false;
+                        }
+                        else {
+                            $(function () {
+                                $("#dialog_info").dialog({
+                                    resizable: false,
+                                });
+                            });
+                        }
+                    }
+                }
+            });
+        }
+    });
+
+    $('#layertree li > span').click(function () {
+        $(this).siblings('fieldset').toggle();
+    }).siblings('fieldset').hide();
+    $('#title_layers').click(function () {
+        $('#layertree').toggle();
+    })
+    $('#title_search').click(function () {
+        $('#search').toggle();
+    })
+    $('#title_legend').click(function () {
+        $('#legend').toggle();
+    })
+    function ShowLayers() {
+        ShowSidePanel();
+        //$('#layertree').show();
+    }
+
+    // домой
+    function ToHome() {
+        map.getView().setCenter([7500000, 6200000]);
+        map.getView().setZoom(5);
+        $("#MapSources").val("OpenCycleMap");
+        var Source = new ol.source.OSM({
+            url: 'http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png'
+        });
+        Layer_OpenCycleMap.setSource(Source);
+        Source_bufer_cato.clear();
+        $("#catoobl").val("");
+        $("#catoray").empty();
+    }
+
+    // смена базового слоя
+    function ChangeMapSource(val) {
+        if (val == 'OpenStreetMap') {
+            var Source = new ol.source.OSM({
+            });
+            Layer_OpenCycleMap.setSource(Source);
+        }
+        if (val == 'OpenCycleMap') {
+            var Source = new ol.source.OSM({
+                url: 'http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png'
+            });
+            Layer_OpenCycleMap.setSource(Source);
+        }
+        if (val == 'ArcGIS') {
+            var attribution = new ol.Attribution({
+                html: 'Tiles © <a href="http://services.arcgisonline.com/ArcGIS/' +
+                    'rest/services/World_Topo_Map/MapServer">ArcGIS</a>'
+            });
+            var Source = new ol.source.XYZ({
+                attributions: [attribution],
+                url: 'http://server.arcgisonline.com/ArcGIS/rest/services/' +
+                    'World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
+            });
+            Layer_OpenCycleMap.setSource(Source);
+        }
+        if (val == 'Bing') {
+            var Source = new ol.source.BingMaps({
+                key: 'AuCpOpisOefLFRJxHhYX01u4K3oIpFAaGDfh09KS7AtHqIhJ0gVEP3Ici8eruBaA',
+                imagerySet: 'Road'
+            });
+            Layer_OpenCycleMap.setSource(Source);
+        }
+    };
+
+    $(document).ready(function (e) {
+
+        $.getScript("http://code.jquery.com/ui/1.11.3/jquery-ui.min.js", function (data, textStatus, jqxhr) {
+        });
+
+        // высота карты
+        $("#mapsidepanel").height($(window).height() - 260);
+        if ($("#mapsidepanel").height() < 730) {
+            $("#mapsidepanel").height(730);
+        }
+
+        //$("#map").height($("#map_swipe").height() - $("#swipe").height());
+        document.getElementById('sidepanel').setAttribute("style", "width:0px");
+        document.getElementById('sidepanel').setAttribute("style", "display:none");
+        map.updateSize();
+
+        $("#MapSources").val("OpenCycleMap");
+    });
+</script>

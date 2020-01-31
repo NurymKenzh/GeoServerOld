@@ -1,0 +1,79 @@
+﻿@model PagedList.IPagedList<GeoServer.Models.CATO>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = GeoServer.Resources.CATOTexts.CATO;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@GeoServer.Resources.CATOTexts.CATO</h2>
+
+<p>
+    @Html.ActionLink(GeoServer.Resources.Interface.CreateNew, "Create") @Html.ActionLink(GeoServer.Resources.Interface.Upload, "Upload")
+</p>
+@using (Html.BeginForm("Index", "CATOes", new { SortOrder = Request.QueryString["SortOrder"], AB = ViewBag.ABFilter, CD = ViewBag.CDFilter, EF = ViewBag.EFFilter, HIJ = ViewBag.HIJFilter, Name = ViewBag.NameFilter }, FormMethod.Get))
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.Raw("AB")
+                <br />
+                @Html.Editor("AB", null, new { htmlAttributes = new { @class = "form-control" }, value = "" })
+            </th>
+            <th>
+                @Html.Raw("CD")
+                <br />
+                @Html.Editor("CD", null, new { htmlAttributes = new { @class = "form-control" }, value = "" })
+            </th>
+            <th>
+                @Html.Raw("EF")
+                <br />
+                @Html.Editor("EF", null, new { htmlAttributes = new { @class = "form-control" }, value = "" })
+            </th>
+            <th>
+                @Html.Raw("HIJ")
+                <br />
+                @Html.Editor("HIJ", null, new { htmlAttributes = new { @class = "form-control" }, value = "" })
+            </th>
+            <th>
+                @Html.ActionLink(GeoServer.Resources.CATOTexts.Name, "Index", new { SortOrder = ViewBag.NameSort, AB = ViewBag.ABFilter, CD = ViewBag.CDFilter, EF = ViewBag.EFFilter, HIJ = ViewBag.HIJFilter, Name = ViewBag.NameFilter })
+                <br />
+                @Html.Editor("Name", null, new { htmlAttributes = new { @class = "form-control" }, value = "" })
+            </th>
+            <th>
+                <br />
+                <input type="submit" value=@GeoServer.Resources.Interface.Find class="btn btn-default">
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AB)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CD)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EF)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HIJ)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink(GeoServer.Resources.Interface.Edit, "Edit", new { id = item.Id }) |
+                    @Html.ActionLink(GeoServer.Resources.Interface.Details, "Details", new { id = item.Id }) |
+                    @Html.ActionLink(GeoServer.Resources.Interface.Delete, "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, SortOrder = Request.QueryString["SortOrder"], AB = ViewBag.ABFilter, CD = ViewBag.CDFilter, EF = ViewBag.EFFilter, HIJ = ViewBag.HIJFilter, Name = ViewBag.NameFilter }), new PagedListRenderOptions() { PageCountAndCurrentLocationFormat = "{0} / {1}", DisplayPageCountAndCurrentLocation = true })
