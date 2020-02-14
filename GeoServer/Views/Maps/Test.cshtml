@@ -598,6 +598,9 @@
 @*<input type="text" id="test" />*@
 
 <script>
+    var geoserverURL = '@ViewBag.geoserverURL',
+        geoserverWorkspace = '@ViewBag.geoserverWorkspace';
+
     function style_fields_ray_cc(feature, resolution) {
         if (feature.get('NDVI') > 0.7) {
             var styles = new ol.style.Style({
@@ -703,9 +706,9 @@
 
     // источник данных и слой fields
     var Source_fields = new ol.source.TileWMS({
-        url: 'http://localhost:8080/geoserver/localhost/wms?',
+        url: geoserverURL + geoserverWorkspace + '/wms?',
         params: {
-            'LAYERS': 'localhost:fields',
+            'LAYERS': geoserverWorkspace + ':fields',
             'VERSION': '1.1.0',
             'FORMAT': 'image/png',
             'TILED': true
@@ -720,7 +723,7 @@
 
     // источник данных и слой admpol
     var Source_admpol = new ol.source.TileWMS({
-        url: 'http://localhost:8080/geoserver/localhost/wms?',
+        url: geoserverURL + geoserverWorkspace + '/wms?',
         params: {
             'LAYERS': 'admpol',
             'VERSION': '1.1.0',
