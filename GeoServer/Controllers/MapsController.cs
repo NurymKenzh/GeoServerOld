@@ -24,7 +24,7 @@ namespace GeoServer.Controllers
         }
 
         // тестовая карта
-        public ActionResult Test()
+        public ActionResult GrainProduction()
         {
             var mapcatoes = db.Admpol1
                 .Select(a => a.catoid)
@@ -80,30 +80,6 @@ namespace GeoServer.Controllers
                     };
             MapSources = MapSourcesData.OrderBy(s => s.Text).ToList();
             ViewBag.MapSources = MapSources;
-            return View();
-        }
-
-        // тестовая карта 2
-        public ActionResult Test2()
-        {
-            return View();
-        }
-
-        // тестовая карта 3
-        public ActionResult Test3()
-        {
-            return View();
-        }
-
-        // тестовая карта 4
-        public ActionResult Test4()
-        {
-            return View();
-        }
-
-        // тестовая карта 5
-        public ActionResult Test5()
-        {
             return View();
         }
 
