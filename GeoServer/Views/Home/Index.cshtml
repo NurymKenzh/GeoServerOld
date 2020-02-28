@@ -1,59 +1,121 @@
-﻿@{
+﻿@using System.Threading;
+@{
     ViewBag.Title = GeoServer.Resources.HomeTexts.Home;
 }
 
 <div class="jumbotron" style="padding: 0px;">
     <img src="../Images/Logos/Frontpage.jpg" alt="" style="width: 100%;" />
-    @*<h1>GeoServer</h1>
-    <p class="lead">Text</p>*@
-    @*<p><a href="" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>
-            Мониторинг ТБО
-        </h2>
-        <p>
-            Проект «Геоинформационная система космического мониторинга полигонов твердых бытовых отходов на базе усовершенствованных технологий тематической обработки спутниковой информации»
-        </p>
-        <p>
-            @Html.ActionLink("Карта", "MSW", "Maps", null, new { @class = "btn btn-default" })
-        </p>
-
-    </div>
-    <div class="col-md-4">
-        <h2>
-            Зернопроизводство
-        </h2>
-        <p>
-            Проект «Программно-математическое обеспечение тематической калибровки спектрально-отражательных характеристик объектов земной поверхности с использованием данных КС ДЗЗ РК»
-        </p>
-        <p>
-            @Html.ActionLink("Карта", "GrainProduction", "Maps", null, new { @class = "btn btn-default" })
-        </p>
-        @*<p>
-            <a class="btn btn-default" href="">
-                Learn more &raquo;
-            </a>
-        </p>*@
-    </div>
-    <div class="col-md-4">
-        <h2>
-            Ирригация
-        </h2>
-        <p>
-            Проект «Система космического и наземного мониторинга мелиоративного состояния орошаемых земель Юга  Казахстана»
-        </p>
-        <p>
-            @Html.ActionLink("Карта", "Irrigation", "Maps", null, new { @class = "btn btn-default" })
-        </p>
-        @*<p>
-            <a class="btn btn-default" href="">
-                Learn more &raquo;
-            </a>
-        </p>*@
-    </div>
+    @if (Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName == "en")
+    {
+        <div class="col-md-4">
+            <h2>
+                Solid waste monitoring
+            </h2>
+            <p>
+                Project “Geoinformation system for space monitoring of solid waste landfills based on advanced technologies for thematic processing of satellite information”
+            </p>
+            <p>
+                @Html.ActionLink(GeoServer.Resources.HomeTexts.Map, "MSW", "Maps", null, new { @class = "btn btn-default" })
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>
+                Grain production
+            </h2>
+            <p>
+                Project “Software and mathematical support for thematic calibration of the spectral-reflective characteristics of objects of the earth’s surface using data from the CS Earth remote sensing of the Republic of Kazakhstan”
+            </p>
+            <p>
+                @Html.ActionLink(GeoServer.Resources.HomeTexts.Map, "GrainProduction", "Maps", null, new { @class = "btn btn-default" })
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>
+                Irrigation
+            </h2>
+            <p>
+                Project "System of space and ground monitoring of the reclamation state of irrigated lands of the South of Kazakhstan"
+            </p>
+            <p>
+                @Html.ActionLink(GeoServer.Resources.HomeTexts.Map, "Irrigation", "Maps", null, new { @class = "btn btn-default" })
+            </p>
+        </div>
+    }
+    else if (Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName == "kk")
+    {
+        <div class="col-md-4">
+            <h2>
+                Қатты қалдықтардың мониторингі
+            </h2>
+            <p>
+                «Спутниктік ақпаратты тақырыптық өңдеудің озық технологиялары негізінде қатты тұрмыстық қалдықтар полигондарының ғарыштық мониторингінің геоақпараттық жүйесі» жобасы.
+            </p>
+            <p>
+                @Html.ActionLink("Карта", "MSW", "Maps", null, new { @class = "btn btn-default" })
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>
+                Астық өндіру
+            </h2>
+            <p>
+                «Қазақстан Республикасының Жерді қашықтықтан зондтау деректерін қолдана отырып, жер беті объектілерінің спектрлік-шағылыстырушы сипаттамаларын тақырыптық калибрлеуді бағдарламалық және математикалық қамтамасыз ету» жобасы.
+            </p>
+            <p>
+                @Html.ActionLink("Карта", "GrainProduction", "Maps", null, new { @class = "btn btn-default" })
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>
+                Суару
+            </h2>
+            <p>
+                «Қазақстанның оңтүстігіндегі суармалы жерлердің мелиоративті жай-күйінің ғарыштық және жер мониторингі жүйесі» жобасы
+            </p>
+            <p>
+                @Html.ActionLink("Карта", "Irrigation", "Maps", null, new { @class = "btn btn-default" })
+            </p>
+        </div>
+    }
+    else if (Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName == "ru")
+    {
+        <div class="col-md-4">
+            <h2>
+                Мониторинг ТБО
+            </h2>
+            <p>
+                Проект «Геоинформационная система космического мониторинга полигонов твердых бытовых отходов на базе усовершенствованных технологий тематической обработки спутниковой информации»
+            </p>
+            <p>
+                @Html.ActionLink("Карта", "MSW", "Maps", null, new { @class = "btn btn-default" })
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>
+                Зернопроизводство
+            </h2>
+            <p>
+                Проект «Программно-математическое обеспечение тематической калибровки спектрально-отражательных характеристик объектов земной поверхности с использованием данных КС ДЗЗ РК»
+            </p>
+            <p>
+                @Html.ActionLink("Карта", "GrainProduction", "Maps", null, new { @class = "btn btn-default" })
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>
+                Ирригация
+            </h2>
+            <p>
+                Проект «Система космического и наземного мониторинга мелиоративного состояния орошаемых земель Юга  Казахстана»
+            </p>
+            <p>
+                @Html.ActionLink("Карта", "Irrigation", "Maps", null, new { @class = "btn btn-default" })
+            </p>
+        </div>
+    }
     <div class="col-md-4">
         @if (ViewBag.Admin)
         {
@@ -78,9 +140,6 @@
             <p>
                 @Html.ActionLink(GeoServer.Resources.CATOTexts.CATO, "Index", "CATOes", null, new { @class = "btn btn-default" })
             </p>
-            @*<p>
-                    @Html.ActionLink(GeoServer.Resources.FieldTexts.Fields, "Index", "Fields", null, new { @class = "btn btn-default" })
-                </p>*@
             <p>
                 @Html.ActionLink("NDVI", "Index", "NDVIs", null, new { @class = "btn btn-default" })
             </p>

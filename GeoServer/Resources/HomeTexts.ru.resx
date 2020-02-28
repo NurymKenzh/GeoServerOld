@@ -129,4 +129,7 @@
   <data name="Language" xml:space="preserve">
     <value>Русский</value>
   </data>
+  <data name="Map" xml:space="preserve">
+    <value>Карта</value>
+  </data>
 </root>

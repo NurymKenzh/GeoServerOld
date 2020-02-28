@@ -129,4 +129,7 @@
   <data name="Language" xml:space="preserve">
     <value>English</value>
   </data>
+  <data name="Map" xml:space="preserve">
+    <value>Map</value>
+  </data>
 </root>
