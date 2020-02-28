@@ -120,16 +120,34 @@
   <data name="About" xml:space="preserve">
     <value>About</value>
   </data>
+  <data name="Administration" xml:space="preserve">
+    <value>Administration</value>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>Contact</value>
   </data>
+  <data name="GrainProduction" xml:space="preserve">
+    <value>Grain production</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="InDeveloping" xml:space="preserve">
+    <value>In developing</value>
+  </data>
+  <data name="Irrigation" xml:space="preserve">
+    <value>Irrigation</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>English</value>
   </data>
   <data name="Map" xml:space="preserve">
     <value>Map</value>
+  </data>
+  <data name="Moderation" xml:space="preserve">
+    <value>Moderation</value>
+  </data>
+  <data name="MSW" xml:space="preserve">
+    <value>MSW</value>
   </data>
 </root>

@@ -22,7 +22,6 @@
 <style>
     .toppanel {
         height: 100px;
-        /*background-color: #366092;*/
     }
 
     .sidepanel {
@@ -112,8 +111,6 @@
         background-color: #366092;
         color: #ffffff;
         cursor: pointer;
-        /*border-width: 2px;
-        border-color: aqua;*/
         border:1px solid black;
         border-color: #d2d2d2;
     }
@@ -126,10 +123,6 @@
         color: #ff0000;
     }
 
-
-    /*body {
-    margin:50px;
-}*/
     .tooltip {
     position: absolute;
     z-index: 1020;
@@ -204,8 +197,6 @@
 }
 </style>
 
-@*<h2>Тестовая карта</h2>*@
-
 <div id="main">
     <div class="toppanel" style="background: #366092 url(../Images/Logos/Logo1.png) no-repeat top left; background-size: contain;">
         <div style="float: right;">
@@ -223,7 +214,7 @@
                 <input type="button" title="@GeoServer.Resources.Interface.Tonneau" class="btn btn-default" onclick="Tonneau()" style="background: url(../Images/Buttons/Swipe.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
                 <input type="button" title="@GeoServer.Resources.Interface.ToHome" class="btn btn-default" onclick="ToHome()" style="background: url(../Images/Buttons/Home.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
                 <input type="button" title="@GeoServer.Resources.Interface.Workspace" class="btn btn-default" onclick="Workspace()" style="background: url(../Images/Buttons/Workspace.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
-                <input type="button" title="Справочник" class="btn btn-default" @*onclick="Workspace()"*@ style="background: url(../Images/Buttons/Info.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
+                <input type="button" title="Справочник" class="btn btn-default" style="background: url(../Images/Buttons/Info.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
                 @Html.DropDownList("MapSources", (IEnumerable<SelectListItem>)ViewBag.MapSources, htmlAttributes: new { @id = "MapSources", @class = "form-control", @style = "float: right; margin: 6px; width: 180px;", @onchange = "ChangeMapSource(this.value)" })
             </div>
         </div>
@@ -296,7 +287,7 @@
                     </li>
                 </ul>
             </div>
-            @* Поиск *@
+            @* Search *@
             <div class="split" id="title_search">
                 <label class="split_label">
                     <u>
@@ -318,7 +309,7 @@
                     </tr>
                 </table>
             </div>
-            @* Легенда *@
+            @* Legend *@
             <div class="split" id="title_legend">
                 <label class="split_label">
                     <u>
@@ -331,16 +322,8 @@
                     Состояние посевов 2014 г.
                 </label>
                 <table>
-                    @*<tr>
-                        <th style="padding-bottom: 10px; padding-left: 10px; color: white;">
-                            Состояние посевов 2014 г.
-                        </th>
-                        <td>
-
-                        </td>
-                    </tr>*@
                     <tr>
-                        <td style="padding-left: 10px; min-width: 50px; margin: 5px;" @*bgcolor="#B8FA9C"*@>
+                        <td style="padding-left: 10px; min-width: 50px; margin: 5px;">
                             <div style="min-height: 20px; max-width: 20px; background-color: #B8FA9C; border:1px solid black; border-color: #444444;">
 
                             </div>
@@ -350,7 +333,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding-left: 10px;" @*bgcolor="#005CE6"*@>
+                        <td style="padding-left: 10px;">
                             <div style="min-height: 20px; max-width: 20px; background-color: #005CE6; border:1px solid black; border-color: #444444;">
 
                             </div>
@@ -360,7 +343,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding-left: 10px;" @*bgcolor="#D2D2D0"*@>
+                        <td style="padding-left: 10px;">
                             <div style="min-height: 20px; max-width: 20px; background-color: #D2D2D0; border:1px solid black; border-color: #444444;">
 
                             </div>
@@ -370,7 +353,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding-left: 10px;" @*bgcolor="#004C73"*@>
+                        <td style="padding-left: 10px;">
                             <div style="min-height: 20px; max-width: 20px; background-color: #004C73; border:1px solid black; border-color: #444444;">
 
                             </div>
@@ -380,7 +363,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding-left: 10px;" @*bgcolor="#737300"*@>
+                        <td style="padding-left: 10px;">
                             <div style="min-height: 20px; max-width: 20px; background-color: #737300; border:1px solid black; border-color: #444444;">
 
                             </div>
@@ -392,8 +375,6 @@
                 </table>
             </div>
         </div>
-        @*<div id="map" class="map">
-        </div>*@
         <div class="map" id="map_swipe">
             <input id="swipe" type="range" style="width: 100%; max-width: 100%;" value="100" hidden="hidden">
             <div id="map" class="map" style="height: 100%;">
@@ -402,7 +383,7 @@
     </div>
 </div>
 
-@* Окно информации об объекте *@
+@* Info about object *@
 <input id="hectare" type="hidden" value="@GeoServer.Resources.FieldTexts.Hectare" />
 <div id="dialog_info" title="@GeoServer.Resources.Interface.ObjectInfo" hidden="hidden">
     <table>
@@ -443,7 +424,7 @@
     </table>
 </div>
 
-@* Окно NDVI *@
+@* NDVI *@
 <div id="dialog_NDVI" title="NDVI" hidden="hidden">
     <table>
         <tr>
@@ -494,12 +475,12 @@
     <input type="button" value="OK" name="Action" onclick="NDVI();" class="btn btn-default" style="background-color: #d1d1d1"/>
 </div>
 
-@* Окно диаграммы NDVI *@
+@* NDVI chart *@
 <div id="dialog_NDVI_chart" title="NDVI" hidden="hidden">
     <img id="NDVI_chart" src="@Url.Action("GetNDVIChartImage")" />
 </div>
 
-@* Окно Состояние посевов *@
+@* State of crops *@
 <div id="dialog_CropsCondition" title="@GeoServer.Resources.NDVITexts.CropsCondition" hidden="hidden">
     <table>
         <tr>
@@ -556,7 +537,7 @@
     <input type="button" value="@GeoServer.Resources.Interface.BringCloser" name="Action" onclick="BringCloserCropsConditionRay();" class="btn btn-default" style="background-color: #d1d1d1" />
 </div>
 
-@* Окно диаграммы Состояние посевов *@
+@* State of crops chart *@
 <div id="dialog_CropsCondition_chart" title="@GeoServer.Resources.NDVITexts.CropsCondition" hidden="hidden">
     <img id="CropsCondition_chart" src="@Url.Action("GetCropsConditionChartImage")" />
     <br />
@@ -565,7 +546,7 @@
     <div id="slider_CropConditionDates" style="margin-left: 10px; margin-right: 40px; float: left; min-width: 370px;"></div>
 </div>
 
-@* Окно Посевные площади *@
+@* Sown area *@
 <div id="dialog_SownArea" title="@GeoServer.Resources.SownAreaTexts.SownAreas" hidden="hidden">
     <table>
         <tr>
@@ -588,14 +569,11 @@
     <input type="button" value="OK" name="Action" onclick="SownArea();" class="btn btn-default" style="background-color: #d1d1d1" />
 </div>
 
-@* Окно диаграммы Посевные площади *@
+@* Sown area chart *@
 <div id="dialog_SownArea_chart" title="@GeoServer.Resources.SownAreaTexts.SownAreas" hidden="hidden">
     <img id="SownArea_chart" src="@Url.Action("GetSownAreaChartImage")" />
     <br />
 </div>
-
-@*<input type="button" value="Test" class="btn btn-default" onclick="Test()" />*@
-@*<input type="text" id="test" />*@
 
 <script>
     var geoserverURL = '@ViewBag.geoserverURL',
@@ -697,14 +675,14 @@
         })
     })
 
-    // векторный слой полей районов с состоянием посевов
+    // vector layer of fields with crop status
     var Source_fields_ray_cc = new ol.source.Vector({});
     var Layer_fields_ray_cc = new ol.layer.Vector({
         source: Source_fields_ray_cc,
         style: style_fields_ray_cc
     });
 
-    // источник данных и слой fields
+    // data source and layer fields
     var Source_fields = new ol.source.TileWMS({
         url: geoserverURL + geoserverWorkspace + '/wms?',
         params: {
@@ -721,7 +699,7 @@
             style: styles
         });
 
-    // источник данных и слой admpol
+    // data source and layer admpol
     var Source_admpol = new ol.source.TileWMS({
         url: geoserverURL + geoserverWorkspace + '/wms?',
         params: {
@@ -742,7 +720,7 @@
         alert(Source_fields_vector.getFeatures().length);
     };
 
-    // буферный векторный слой полей
+    // buffer vector layer of fields
     var Source_bufer = new ol.source.Vector({});
     var Layer_bufer = new ol.layer.Vector({
         source: Source_bufer,
@@ -757,7 +735,7 @@
         })
     });
 
-    // буферный векторный слой КАТО
+    // CATO vector buffer layer
     var Source_bufer_cato = new ol.source.Vector({});
     var Layer_bufer_cato = new ol.layer.Vector({
         source: Source_bufer_cato,
@@ -772,14 +750,12 @@
         })
     });
 
-    // буферный векторный слой полей
+    // buffer vector layer of fields
     var Source_bufer_fields = new ol.source.Vector({});
     var Layer_bufer_fields = new ol.layer.Vector({
         source: Source_bufer_fields,
         style: new ol.style.Style({
-            fill: new ol.style.Fill({
-                //color: 'transparent'
-            }),
+            fill: new ol.style.Fill({}),
             stroke: new ol.style.Stroke({
                 color: 'red'
             })
@@ -787,7 +763,7 @@
     });
 
     var Layer_admpol2 = new ol.layer.Vector();
-    // векторный слой областей
+    // vector layer of areas
     var Layer_admpol1 = new ol.layer.Vector();
     var url1 = "http://localhost:8080/geoserver/localhost/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=localhost:admpol1&outputFormat=text/javascript&format_options=callback:getJson";
     $.ajax({
@@ -805,8 +781,7 @@
                     })
                 })
             });
-
-            // векторный слой районов
+            // vector layer of districts
             var url2 = "http://localhost:8080/geoserver/localhost/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=localhost:admpol2&outputFormat=text/javascript&format_options=callback:getJson";
             $.ajax({
                 jsonp: false,
@@ -828,7 +803,7 @@
         }
     });
 
-    // слой OpenCycleMap
+    // OpenCycleMap
     function transform(extent) {
         return ol.proj.transformExtent(extent, 'EPSG:4326', 'EPSG:3857');
     }
@@ -838,7 +813,7 @@
         })
     });
 
-    // слой Bing
+    // Bing
     var Layer_Bing = new ol.layer.Tile({
         source: new ol.source.BingMaps({
             key: 'AuCpOpisOefLFRJxHhYX01u4K3oIpFAaGDfh09KS7AtHqIhJ0gVEP3Ici8eruBaA',
@@ -846,14 +821,14 @@
         })
     });
 
-    // вид
+    // view
     var view = new ol.View({
         projection: 'EPSG:3857',
         center: [7500000, 6200000],
         zoom: 5
     });
 
-    // правая панель
+    // right panel
     window.app = {};
     var app = window.app;
     app.ShowHideSidePanel = function (opt_options) {
@@ -887,26 +862,22 @@
     }
     ol.inherits(app.ShowHideSidePanel, ol.control.Control);
     function ShowSidePanel() {
-        //document.getElementById('sidepanel').setAttribute("style", "width:350px");
-        //document.getElementById("sidepanelshowhide").innerHTML = '»';
         if (document.getElementById("sidepanel").offsetWidth == 0) {
             document.getElementById('sidepanel').setAttribute("style", "width:350px");
             document.getElementById('sidepanel').setAttribute("style", "display:block");
-            //button.innerHTML = '»';
             document.getElementById('sidepanelshowhide').innerHTML = '»';
             map.updateSize();
         }
         else {
             document.getElementById('sidepanel').setAttribute("style", "width:0px");
             document.getElementById('sidepanel').setAttribute("style", "display:none");
-            //button.innerHTML = '«';
             document.getElementById('sidepanelshowhide').innerHTML = '«';
             map.updateSize();
         }
         map.updateSize();
     }
 
-    // обзорная мини-карта
+    // overview mini map
     var overviewMapControl = new ol.control.OverviewMap({
         className: 'ol-overviewmap ol-custom-overviewmap',
         layers: [
@@ -940,7 +911,7 @@
         overviewMapControl.setCollapsed(!overviewMapControl.getCollapsed());
     }
 
-    // элемент карты - информация
+    // map info
     var attribution = new ol.control.Attribution({
         collapsible: true,
         label: 'i',
@@ -949,13 +920,13 @@
     });
 
 
-    // элемент zoom
+    // zoom
     var zoom = new ol.control.Zoom({
         zoomInTipLabel: '',
         zoomOutTipLabel: ''
     });
 
-    // карта
+    // map
     var map = new ol.Map({
         controls: ol.control.defaults({
             attribution: false,
@@ -972,16 +943,16 @@
             
             Layer_fields,
             Layer_admpol,
-            Layer_bufer, // выделенное поле
+            Layer_bufer, // selected field
             Layer_bufer_cato,
-            Layer_bufer_fields // поля района
+            Layer_bufer_fields // area fields
     ,Layer_Bing
         ],
         target: 'map',
         view: view
     });
 
-    // шторка
+    // curtain
     Layer_Bing.on('precompose', function (event) {
         var ctx = event.context;
         var width = ctx.canvas.width * (swipe.value / 100);
@@ -1000,14 +971,12 @@
     }, false);
 
 
-    // первый вызов окна информации об объекте
+    // first call of the object information window
     var first_info = true;
 
-    // функция нажатия на карту
+    // map click function
     map.on('singleclick', function (evt) {
-
         Source_bufer.clear();
-
         var viewResolution = (view.getResolution());
         document.getElementById("fieldnumber").innerHTML = '';
         document.getElementById("fieldacreage").innerHTML = '';
@@ -1020,7 +989,7 @@
                 'propertyName': 'idfrommap,catoid,geom'
             });
         if (url_fields) {
-            // данные со слоев
+            // data from layers
             jQuery.ajax({
                 jsonp: false,
                 jsonpCallback: 'getJson',
@@ -1029,16 +998,16 @@
                 async: false,
                 dataType: 'jsonp',
                 success: function (data) {
-                    // номер поля
+                    // field number
                     document.getElementById("fieldnumber").innerHTML = data.features[0].properties.idfrommap;
 
-                    // работа с полем в виде вектора
+                    // work with the field as a vector
                     var polyFeature = new ol.Feature({
                         geometry: new ol.geom.MultiPolygon(data.features[0].geometry.coordinates)
                     });
                     Source_bufer.addFeature(polyFeature);
 
-                    // получение площади поля
+                    // getting the area of the field
                     $.ajax({
                         url: '@Url.Action("GetFieldArea")',
                         data: JSON.stringify({ "fieldidfrommap": document.getElementById("fieldnumber").innerHTML }),
@@ -1051,7 +1020,7 @@
                         }
                     });
 
-                    // получение КАТО поля
+                    // getting fields CATO
                     $.ajax({
                         url: '@Url.Action("GetCATOName")',
                         data: JSON.stringify({ "catoid": data.features[0].properties.catoid }),
@@ -1064,7 +1033,7 @@
                         }
                     });
 
-                    // получение данных по севообороту
+                    // crop rotation data acquisition
                     $.ajax({
                         url: '@Url.Action("GetCropRotation")',
                         data: JSON.stringify({ "fieldidfrommap": document.getElementById("fieldnumber").innerHTML, "year": document.getElementById("InfoYear").options[document.getElementById("InfoYear").selectedIndex].value }),
@@ -1101,7 +1070,7 @@
         }
     });
 
-    // слои
+    // layers
     function bindInputs(layerid, layer) {
         var visibilityInput = $(layerid + ' input.visible');
         visibilityInput.on('change', function () {
@@ -1134,6 +1103,7 @@
         });
         opacityInput.val(String(layer.getOpacity() * 100));
     }
+
     map.getLayers().forEach(function (layer, i) {
         bindInputs('#layer' + i, layer);
     });
@@ -1149,12 +1119,12 @@
     $('#title_legend').click(function () {
         $('#legend').toggle();
     })
+
     function ShowLayers() {
         ShowSidePanel();
-        //$('#layertree').show();
     }
 
-    // отобразить, скрыть шторку
+    // show, hide the curtain
     function Tonneau() {
         $('#swipe').toggle();
         if ($('#swipe').is(':visible')) {
@@ -1166,7 +1136,7 @@
         map.updateSize();
     }
 
-    // домой
+    // homt
     function ToHome() {
         map.getView().setCenter([7500000, 6200000]);
         map.getView().setZoom(5);
@@ -1180,13 +1150,13 @@
         $("#catoray").empty();
     }
 
-    // рабочая область
+    // workspace
     function Workspace() {
         var extent = Layer_admpol1.getSource().getExtent();
         map.getView().fit(extent, map.getSize());
     }
 
-    // изменение года в окне информации об объекте
+    // change of year in the object information window
     $("#InfoYear").change(function () {
         // получение данных по севообороту
         document.getElementById("fieldcroprotation").innerHTML = '';

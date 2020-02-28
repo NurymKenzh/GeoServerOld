@@ -120,16 +120,34 @@
   <data name="About" xml:space="preserve">
     <value>О сайте</value>
   </data>
+  <data name="Administration" xml:space="preserve">
+    <value>Администрирование</value>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>Контакты</value>
   </data>
+  <data name="GrainProduction" xml:space="preserve">
+    <value>Зернопроизводство</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Главная</value>
+  </data>
+  <data name="InDeveloping" xml:space="preserve">
+    <value>В разработке</value>
+  </data>
+  <data name="Irrigation" xml:space="preserve">
+    <value>Ирригация</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Русский</value>
   </data>
   <data name="Map" xml:space="preserve">
     <value>Карта</value>
+  </data>
+  <data name="Moderation" xml:space="preserve">
+    <value>Модерирование</value>
+  </data>
+  <data name="MSW" xml:space="preserve">
+    <value>ТБО</value>
   </data>
 </root>

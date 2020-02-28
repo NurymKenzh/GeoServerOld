@@ -6,7 +6,6 @@
     <title>@ViewBag.Title - GeoServer</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -22,8 +21,6 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink(GeoServer.Resources.HomeTexts.Home, "Index", "Home")</li>
-                    <li>@Html.ActionLink(GeoServer.Resources.HomeTexts.About, "About", "Home")</li>
-                    <li>@Html.ActionLink(GeoServer.Resources.HomeTexts.Contact, "Contact", "Home")</li>
                     <li>@Html.ActionLink(GeoServer.Resources.HomeTexts.Language, "Index", "Language")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -37,8 +34,6 @@
             <p>&copy; @DateTime.Now.Year - GeoServer</p>
         </footer>
     </div>
-
-    @*@Scripts.Render("~/bundles/jquery")*@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

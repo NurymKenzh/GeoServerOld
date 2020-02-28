@@ -120,10 +120,10 @@
         @if (ViewBag.Admin)
         {
             <h2>
-                Администрирование
+                @GeoServer.Resources.HomeTexts.Administration
             </h2>
             <p>
-                Администрирование
+                @GeoServer.Resources.HomeTexts.Administration
             </p>
             <p>
                 @Html.ActionLink(GeoServer.Resources.AdminTexts.Users, "Users", "Admin", null, new { @class = "btn btn-default" })
@@ -132,10 +132,10 @@
         @if ((ViewBag.Admin) || (ViewBag.Moderator))
         {
             <h2>
-                Модерирование
+                @GeoServer.Resources.HomeTexts.Moderation
             </h2>
             <p>
-                Модерирование
+                @GeoServer.Resources.HomeTexts.Moderation
             </p>
             <p>
                 @Html.ActionLink(GeoServer.Resources.CATOTexts.CATO, "Index", "CATOes", null, new { @class = "btn btn-default" })

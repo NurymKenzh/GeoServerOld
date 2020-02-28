@@ -120,16 +120,34 @@
   <data name="About" xml:space="preserve">
     <value>Сайт туралы</value>
   </data>
+  <data name="Administration" xml:space="preserve">
+    <value>Әкімшілік</value>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>Байланыс</value>
   </data>
+  <data name="GrainProduction" xml:space="preserve">
+    <value>Астық өндіру</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Басты</value>
+  </data>
+  <data name="InDeveloping" xml:space="preserve">
+    <value>Жасалуда</value>
+  </data>
+  <data name="Irrigation" xml:space="preserve">
+    <value>Суару</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Қазақ</value>
   </data>
   <data name="Map" xml:space="preserve">
     <value>Карта</value>
+  </data>
+  <data name="Moderation" xml:space="preserve">
+    <value>Модерация</value>
+  </data>
+  <data name="MSW" xml:space="preserve">
+    <value>ТҚҚ</value>
   </data>
 </root>

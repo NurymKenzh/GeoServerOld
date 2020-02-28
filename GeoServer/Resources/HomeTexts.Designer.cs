@@ -70,6 +70,15 @@ namespace GeoServer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Administration.
+        /// </summary>
+        public static string Administration {
+            get {
+                return ResourceManager.GetString("Administration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contact.
         /// </summary>
         public static string Contact {
@@ -79,11 +88,38 @@ namespace GeoServer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Grain production.
+        /// </summary>
+        public static string GrainProduction {
+            get {
+                return ResourceManager.GetString("GrainProduction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In developing.
+        /// </summary>
+        public static string InDeveloping {
+            get {
+                return ResourceManager.GetString("InDeveloping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Irrigation.
+        /// </summary>
+        public static string Irrigation {
+            get {
+                return ResourceManager.GetString("Irrigation", resourceCulture);
             }
         }
         
@@ -102,6 +138,24 @@ namespace GeoServer.Resources {
         public static string Map {
             get {
                 return ResourceManager.GetString("Map", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moderation.
+        /// </summary>
+        public static string Moderation {
+            get {
+                return ResourceManager.GetString("Moderation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MSW.
+        /// </summary>
+        public static string MSW {
+            get {
+                return ResourceManager.GetString("MSW", resourceCulture);
             }
         }
     }
