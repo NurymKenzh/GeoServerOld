@@ -97,6 +97,15 @@ namespace GeoServer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sown area, ha.
+        /// </summary>
+        public static string SownAreaha {
+            get {
+                return ResourceManager.GetString("SownAreaha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Steam.
         /// </summary>
         public static string Steam {

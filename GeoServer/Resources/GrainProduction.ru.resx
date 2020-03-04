@@ -129,6 +129,9 @@
   <data name="Sowing" xml:space="preserve">
     <value>Посев</value>
   </data>
+  <data name="SownAreaha" xml:space="preserve">
+    <value>Посевные площади, га</value>
+  </data>
   <data name="Steam" xml:space="preserve">
     <value>Пар</value>
   </data>

@@ -23,7 +23,6 @@ namespace GeoServer.Controllers
             return View();
         }
 
-        // тестовая карта
         public ActionResult GrainProduction()
         {
             var mapcatoes = db.Admpol1
@@ -51,7 +50,6 @@ namespace GeoServer.Controllers
             return View();
         }
 
-        // Ирригация
         public ActionResult Irrigation()
         {
             List<SelectListItem> MapSources = new List<SelectListItem>();
@@ -66,7 +64,6 @@ namespace GeoServer.Controllers
             return View();
         }
 
-        // ТБО
         public ActionResult MSW()
         {
             List<SelectListItem> MapSources = new List<SelectListItem>();
@@ -590,84 +587,16 @@ namespace GeoServer.Controllers
 
             string title = cato.Name + " (" + Year.ToString() + ")";
 
-            //string theme = "<Chart PaletteCustomColors=\"255,0,0; 255,127,39; 255,200,14; 181,230,29; 0,255,0; 34,177,76; 63,72,204\" BackColor=\"#C9DC87\" BackGradientStyle=\"TopBottom\" BorderColor=\"181, 64, 1\" BorderWidth=\"2\" BorderlineDashStyle=\"Solid\" Palette=\"None\">\r\n  <ChartAreas>\r\n    <ChartArea Name=\"Default\" _Template_=\"All\" BackColor=\"Transparent\" BackSecondaryColor=\"White\" BorderColor=\"64, 64, 64, 64\" BorderDashStyle=\"Solid\" ShadowColor=\"Transparent\">\r\n      <AxisY LineColor=\"64, 64, 64, 64\">\r\n        <MajorGrid Interval=\"Auto\" LineColor=\"64, 64, 64, 64\" />\r\n        <LabelStyle Font=\"Trebuchet MS, 8.25pt, style=Bold\" />\r\n      </AxisY>\r\n      <AxisX LineColor=\"64, 64, 64, 64\">\r\n        <MajorGrid LineColor=\"64, 64, 64, 64\" />\r\n        <LabelStyle Font=\"Trebuchet MS, 8.25pt, style=Bold\" />\r\n      </AxisX>\r\n      <Area3DStyle Inclination=\"15\" IsClustered=\"False\" IsRightAngleAxes=\"False\" Perspective=\"10\" Rotation=\"10\" WallWidth=\"0\" />\r\n    </ChartArea>\r\n  </ChartAreas>\r\n  <Legends>\r\n    <Legend _Template_=\"All\" Alignment=\"Center\" BackColor=\"Transparent\" Docking=\"Right\" Font=\"Trebuchet MS, 8.25pt, style=Bold\" IsTextAutoFit =\"True\" LegendStyle=\"Column\">\r\n    </Legend>\r\n  </Legends>\r\n  <BorderSkin SkinStyle=\"Emboss\" />\r\n</Chart>";
-            string theme = "<Chart PaletteCustomColors=\"184,250,156; 0,92,230; 210,210,208; 0,76,115; 115,115,0\" BackColor=\"#C9DC87\" BackGradientStyle=\"TopBottom\" BorderColor=\"181, 64, 1\" BorderWidth=\"2\" BorderlineDashStyle=\"Solid\" Palette=\"None\">\r\n  <ChartAreas>\r\n    <ChartArea Name=\"Default\" _Template_=\"All\" BackColor=\"Transparent\" BackSecondaryColor=\"White\" BorderColor=\"64, 64, 64, 64\" BorderDashStyle=\"Solid\" ShadowColor=\"Transparent\">\r\n      <AxisY LineColor=\"64, 64, 64, 64\">\r\n        <MajorGrid Interval=\"Auto\" LineColor=\"64, 64, 64, 64\" />\r\n        <LabelStyle Font=\"Trebuchet MS, 8.25pt, style=Bold\" />\r\n      </AxisY>\r\n      <AxisX LineColor=\"64, 64, 64, 64\">\r\n        <MajorGrid LineColor=\"64, 64, 64, 64\" />\r\n        <LabelStyle Font=\"Trebuchet MS, 8.25pt, style=Bold\" />\r\n      </AxisX>\r\n      <Area3DStyle Inclination=\"15\" IsClustered=\"False\" IsRightAngleAxes=\"False\" Perspective=\"10\" Rotation=\"10\" WallWidth=\"0\" />\r\n    </ChartArea>\r\n  </ChartAreas>\r\n  <Legends>\r\n    <Legend _Template_=\"All\" Alignment=\"Center\" BackColor=\"Transparent\" Docking=\"Right\" Font=\"Trebuchet MS, 8.25pt, style=Bold\" IsTextAutoFit =\"True\" LegendStyle=\"Column\">\r\n    </Legend>\r\n  </Legends>\r\n  <BorderSkin SkinStyle=\"Emboss\" />\r\n</Chart>";
-            //string Vanilla = "<Chart PaletteCustomColors=\"184,250,156; 0,92,230; 210,210,208; 0,92,230; 210,210,208\" BorderColor=\"#000\" BorderWidth=\"2\" BorderlineDashStyle=\"Solid\">\r\n<ChartAreas>\r\n    <ChartArea _Template_=\"All\" Name=\"Default\">\r\n            <AxisX>\r\n                <MinorGrid Enabled=\"False\" />\r\n                <MajorGrid Enabled=\"False\" />\r\n            </AxisX>\r\n            <AxisY>\r\n                <MajorGrid Enabled=\"False\" />\r\n                <MinorGrid Enabled=\"False\" />\r\n            </AxisY>\r\n    </ChartArea>\r\n</ChartAreas>\r\n</Chart>";
-
             var chart_SownArea = new Chart(width: 400, height: 300, theme: ChartTheme.Green)
             .AddTitle(title)
             .AddSeries(
                 chartType: "Column",
                 xValue: names,
                 yValues: values,
-                name: "Посевные площади, га")
+                name: GeoServer.Resources.GrainProduction.SownAreaha)
             .AddLegend();
 
             return File(chart_SownArea.ToWebImage().GetBytes(), "image/jpeg");
-        }
-
-        [HttpPost]
-        public ActionResult GetMaskInfo(string adm_2, int type_2013, int type_2014, int type_2016)
-        {
-            string CATOName = db.CATOes
-                .Where(c => c.AB == adm_2.Substring(0,2) && c.CD == adm_2.Substring(2,2))
-                .Select(c => c.Name)
-                .FirstOrDefault();
-            CATOName = db.CATOes
-                .Where(c => c.AB == adm_2.Substring(0, 2))
-                .Select(c => c.Name)
-                .FirstOrDefault() + " " + CATOName;
-            return Json(new {
-                adm_2 = CATOName,
-                type_2013 = type_2013 == 1 ? "Пашня":
-                            type_2013 == 2 ? "Пар" :
-                            type_2013 == 3 ? "Залежь" :
-                            type_2013 == 4 ? "Пар из залежи" :
-                            type_2013 == 5 ? "Многолетка" : "",
-                type_2014 = type_2014 == 1 ? "Пашня" :
-                            type_2014 == 2 ? "Пар" :
-                            type_2014 == 3 ? "Залежь" :
-                            type_2014 == 4 ? "Пар из залежи" :
-                            type_2014 == 5 ? "Многолетка" : "",
-                type_2016 = type_2016 == 1 ? "Пашня" :
-                            type_2016 == 2 ? "Пар" :
-                            type_2016 == 3 ? "Залежь" :
-                            type_2016 == 4 ? "Пар из залежи" :
-                            type_2016 == 5 ? "Многолетка" : "",
-            });
-        }
-
-        [HttpPost]
-        public ActionResult GetMSWInfo(string layer_name, string id)
-        {
-            //string CATOName = db.CATOes
-            //    .Where(c => c.AB == adm_2.Substring(0, 2) && c.CD == adm_2.Substring(2, 2))
-            //    .Select(c => c.Name)
-            //    .FirstOrDefault();
-            //CATOName = db.CATOes
-            //    .Where(c => c.AB == adm_2.Substring(0, 2))
-            //    .Select(c => c.Name)
-            //    .FirstOrDefault() + " " + CATOName;
-            //return Json(new
-            //{
-            //    adm_2 = CATOName,
-            //    type_2013 = type_2013 == 1 ? "Пашня" :
-            //                type_2013 == 2 ? "Пар" :
-            //                type_2013 == 3 ? "Залежь" :
-            //                type_2013 == 4 ? "Пар из залежи" :
-            //                type_2013 == 5 ? "Многолетка" : "",
-            //    type_2014 = type_2014 == 1 ? "Пашня" :
-            //                type_2014 == 2 ? "Пар" :
-            //                type_2014 == 3 ? "Залежь" :
-            //                type_2014 == 4 ? "Пар из залежи" :
-            //                type_2014 == 5 ? "Многолетка" : "",
-            //    type_2016 = type_2016 == 1 ? "Пашня" :
-            //                type_2016 == 2 ? "Пар" :
-            //                type_2016 == 3 ? "Залежь" :
-            //                type_2016 == 4 ? "Пар из залежи" :
-            //                type_2016 == 5 ? "Многолетка" : "",
-            //});
-            return Json(new { });
         }
     }
 }

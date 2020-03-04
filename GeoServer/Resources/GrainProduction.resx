@@ -129,6 +129,9 @@
   <data name="Sowing" xml:space="preserve">
     <value>Sowing</value>
   </data>
+  <data name="SownAreaha" xml:space="preserve">
+    <value>Sown area, ha</value>
+  </data>
   <data name="Steam" xml:space="preserve">
     <value>Steam</value>
   </data>

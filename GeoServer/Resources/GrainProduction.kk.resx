@@ -129,6 +129,9 @@
   <data name="Sowing" xml:space="preserve">
     <value>Егу</value>
   </data>
+  <data name="SownAreaha" xml:space="preserve">
+    <value>Егіс алқабы, га</value>
+  </data>
   <data name="Steam" xml:space="preserve">
     <value>Бу</value>
   </data>
