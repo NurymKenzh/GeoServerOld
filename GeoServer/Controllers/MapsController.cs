@@ -12,7 +12,7 @@ namespace GeoServer.Controllers
 {
     public class MapsController : Controller
     {
-        const string geoserverURL = "http://89.250.84.186:8080/geoserver/",
+        const string geoserverURL = "http://92.46.36.100:8080/geoserver/",
             geoserverWorkspace = "GeoServerOld";
 
         private NpgsqlContext db = new NpgsqlContext();

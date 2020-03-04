@@ -1136,7 +1136,7 @@
         map.updateSize();
     }
 
-    // homt
+    // home
     function ToHome() {
         map.getView().setCenter([7500000, 6200000]);
         map.getView().setZoom(5);
@@ -1158,7 +1158,7 @@
 
     // change of year in the object information window
     $("#InfoYear").change(function () {
-        // получение данных по севообороту
+        // get crop rotation
         document.getElementById("fieldcroprotation").innerHTML = '';
         $.ajax({
             url: '@Url.Action("GetCropRotation")',
@@ -1173,7 +1173,7 @@
         });
     });
 
-    // поиск области
+    // area search
     $("#catoobl").change(function () {
         if (document.getElementById("catoobl").options[document.getElementById("catoobl").selectedIndex].value == '') {
             $("#catoray").empty();
@@ -1182,14 +1182,14 @@
         else {
             for (var f = 0; f < Layer_admpol1.getSource().getFeatures().length; f++) {
                 if (Layer_admpol1.getSource().getFeatures()[f].get('catoid') == document.getElementById("catoobl").options[document.getElementById("catoobl").selectedIndex].value) {
-                    // копирование области в буферный слой КАТО
+                    // copy data into bufer layer
                     Source_bufer_cato.clear();
                     var polyFeature = new ol.Feature({
                         geometry: Layer_admpol1.getSource().getFeatures()[f].getGeometry()
                     });
                     Source_bufer_cato.addFeature(polyFeature);
 
-                    // формирование списка районов
+                    // districts list
                     $.ajax({
                         url: '@Url.Action("GetCATORayons")',
                         data: JSON.stringify({ "oblcatoid": Layer_admpol1.getSource().getFeatures()[f].get('catoid') }),
@@ -1214,21 +1214,19 @@
 
     });
 
-    // поиск района
+    // district search
     $("#catoray").change(function () {
         Source_bufer_cato.clear();
         for (var f = 0; f < Layer_admpol2.getSource().getFeatures().length; f++) {
             if (Layer_admpol2.getSource().getFeatures()[f].get('catoid') == document.getElementById("catoray").options[document.getElementById("catoray").selectedIndex].value) {
                 var extent = Layer_admpol2.getSource().getFeatures()[f].getGeometry().getExtent();
                 map.getView().fit(extent, map.getSize());
-
-                // копирование района в буферный слой КАТО
+                // copy data into bufer layer
                 Source_bufer_cato.clear();
                 var polyFeature = new ol.Feature({
                     geometry: Layer_admpol2.getSource().getFeatures()[f].getGeometry()
                 });
                 Source_bufer_cato.addFeature(polyFeature);
-
                 break;
             }
         }
@@ -1250,12 +1248,12 @@
         });
     }
 
-    // выбор области NDVI
+    // select area NDVI
     function ChangeNDVICatoObl() {
         for (var f = 0; f < Layer_admpol1.getSource().getFeatures().length; f++) {
             $("#NDVIcatoray").empty();
             if (Layer_admpol1.getSource().getFeatures()[f].get('catoid') == document.getElementById("NDVIcatoobl").options[document.getElementById("NDVIcatoobl").selectedIndex].value) {
-                // формирование списка районов
+                // districts list
                 $.ajax({
                     url: '@Url.Action("GetCATORayons")',
                     data: JSON.stringify({ "oblcatoid": Layer_admpol1.getSource().getFeatures()[f].get('catoid') }),
@@ -1281,7 +1279,7 @@
         ChangeNDVICatoObl();
     });
 
-    // показать диаграмму NDVI
+    // NDVI chart
     function NDVI() {
         document.getElementById("NDVI_chart").src = "";
         var catoid = document.getElementById("NDVIcatoobl").options[document.getElementById("NDVIcatoobl").selectedIndex].value;
@@ -1311,13 +1309,12 @@
     var play = 0;
     var w;
 
-    // Состояние посевов
+    // crops condition
     function ShowCropsCondition() {
         if (document.getElementById("catoobl").options[document.getElementById("catoobl").selectedIndex].value != '') {
             document.getElementById("CropsConditioncatoobl").selectedIndex = document.getElementById("catoobl").selectedIndex - 1;
         }
         ChangeCropsConditionCatoObl();
-
         $(function () {
             $("#dialog_CropsCondition").dialog({
                 width: 290,
@@ -1330,12 +1327,12 @@
         });
     }
 
-    // выбор области Состояние посевов
+    // crops condition: select area
     function ChangeCropsConditionCatoObl() {
         for (var f = 0; f < Layer_admpol1.getSource().getFeatures().length; f++) {
             $("#CropsConditioncatoray").empty();
             if (Layer_admpol1.getSource().getFeatures()[f].get('catoid') == document.getElementById("CropsConditioncatoobl").options[document.getElementById("CropsConditioncatoobl").selectedIndex].value) {
-                // формирование списка районов
+                // districts list
                 $.ajax({
                     url: '@Url.Action("GetCATORayonsNotEmpty")',
                     data: JSON.stringify({ "oblcatoid": Layer_admpol1.getSource().getFeatures()[f].get('catoid') }),
@@ -1361,11 +1358,11 @@
         ChangeCropsConditionCatoObl();
     });
 
-    // приблизить к району Состояние посевов
+    // crops condition: zoom to district
     function BringCloserCropsConditionRay() {
         for (var f = 0; f < Layer_admpol2.getSource().getFeatures().length; f++) {
             if (Layer_admpol2.getSource().getFeatures()[f].get('catoid') == document.getElementById("CropsConditioncatoray").options[document.getElementById("CropsConditioncatoray").selectedIndex].value) {
-                // копирование района в буферный слой КАТО
+                // copy data into bufer layer
                 Source_bufer_cato.clear();
                 var polyFeature = new ol.Feature({
                     geometry: Layer_admpol2.getSource().getFeatures()[f].getGeometry()
@@ -1379,9 +1376,8 @@
         }
     };
 
-    // показать диаграмму Состояние посевов
+    // crops condition chart
     function CropsCondition() {
-
         $("#CropsConditionYear").prop('disabled', true);
         $("#CropsConditionMonthStart").prop('disabled', true);
         $("#CropsConditionDayStart").prop('disabled', true);
@@ -1389,9 +1385,7 @@
         $("#CropsConditionDayFinish").prop('disabled', true);
         $("#CropsConditioncatoobl").prop('disabled', true);
         $("#CropsConditioncatoray").prop('disabled', true);
-
         document.getElementById("CropsCondition_chart").src = "";
-
         var catoid = document.getElementById("CropsConditioncatoobl").options[document.getElementById("CropsConditioncatoobl").selectedIndex].value;
         if (document.getElementById("CropsConditioncatoray").options[document.getElementById("CropsConditioncatoray").selectedIndex].text != '') {
             catoid = document.getElementById("CropsConditioncatoray").options[document.getElementById("CropsConditioncatoray").selectedIndex].value;
@@ -1421,16 +1415,12 @@
                 stopWorker();
                 $('#button_play').css('background-image', 'url(../Images/Buttons/Play.png)');
                 play = 0;
-                //map.removeLayer(Layer_fields_ray_cc);
             }
         });
 
-        // слайдер дат
-        //alert($("#slider_date").innerHTML);
+        // dates slider
         $("#slider_date").html('');
-
         var sliderTooltip = function (event, ui) {
-            //var curValue = ui.value || 0;
             var curValue = '';
             $.ajax({
                 url: '@Url.Action("GetCropConditionDate")',
@@ -1443,7 +1433,6 @@
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
-                    //alert(data.Date);
                     curValue = data.Date;
                     var tooltip = '<div style="position: absolute; z-index: 1020; display: block; padding: 5px; font-size: 11px; visibility: visible; margin-top: -2px; bottom:120%; margin-left: -3.5em;"><div id="slider_date" class="tooltip-inner">' + curValue + '</div><div class="tooltip-arrow"></div></div>';
                     $('.ui-slider-handle').html(tooltip);
@@ -1473,7 +1462,6 @@
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                //alert(data.Date);
                 curValue = data.Date;
                 var tooltip = '<div style="position: absolute; z-index: 1020; display: block; padding: 5px; font-size: 11px; visibility: visible; margin-top: -2px; bottom:120%; margin-left: -3.5em;"><div id="slider_date" class="tooltip-inner">' + curValue + '</div><div class="tooltip-arrow"></div></div>';
                 $('.ui-slider-handle').html(tooltip);
@@ -1481,7 +1469,6 @@
             error: function () {
             }
         });
-
 
         $.ajax({
             url: '@Url.Action("GetCropConditionDatesCount")',
@@ -1537,7 +1524,6 @@
         if (document.getElementById("CropsConditioncatoray").options[document.getElementById("CropsConditioncatoray").selectedIndex].text != '') {
             catoid = document.getElementById("CropsConditioncatoray").options[document.getElementById("CropsConditioncatoray").selectedIndex].value;
         }
-
         var urltest2 = '@Url.Action("GetCATOFields")';
         $.ajax({
             type: 'POST',
@@ -1581,11 +1567,6 @@
                 w = new Worker("../Scripts/worker.js");
             }
             w.onmessage = function (event) {
-                //function timeOut() {
-
-                //};
-                //setTimeout("timeOut()", 4000);
-                //$("#test").val(event.data);
                 $("#slider_CropConditionDates").slider("value", $("#slider_CropConditionDates").slider("value") + 1);
                 var curValue = '';
                 $.ajax({
@@ -1599,7 +1580,6 @@
                     type: 'POST',
                     contentType: 'application/json; charset=utf-8',
                     success: function (data) {
-                        //alert(data.Date);
                         curValue = data.Date;
                         var tooltip = '<div style="position: absolute; z-index: 1020; display: block; padding: 5px; font-size: 11px; visibility: visible; margin-top: -2px; bottom:120%; margin-left: -3.5em;"><div id="slider_date" class="tooltip-inner">' + curValue + '</div><div class="tooltip-arrow"></div></div>';
                         $('.ui-slider-handle').html(tooltip);
@@ -1608,9 +1588,7 @@
                     }
                 });
             };
-        } else {
-            //document.getElementById("test").innerHTML = "Sorry, your browser does not support Web Workers...";
-        }
+        } else { }
     }
     function stopWorker() {
         if (typeof (w) !== "undefined") {
@@ -1633,13 +1611,12 @@
         }
     };
 
-    // Посевные площади
+    // Sown area
     function ShowSownArea() {
         if (document.getElementById("catoobl").options[document.getElementById("catoobl").selectedIndex].value != '') {
             document.getElementById("SownAreacatoobl").selectedIndex = document.getElementById("catoobl").selectedIndex - 1;
         }
         ChangeSownAreaCatoObl();
-
         $(function () {
             $("#dialog_SownArea").dialog({
                 width: 290,
@@ -1649,12 +1626,12 @@
         });
     }
 
-    // выбор области Посевные площади
+    // Sown area: select area
     function ChangeSownAreaCatoObl() {
         for (var f = 0; f < Layer_admpol1.getSource().getFeatures().length; f++) {
             $("#SownAreacatoray").empty();
             if (Layer_admpol1.getSource().getFeatures()[f].get('catoid') == document.getElementById("SownAreacatoobl").options[document.getElementById("SownAreacatoobl").selectedIndex].value) {
-                // формирование списка районов
+                // districts list
                 $.ajax({
                     url: '@Url.Action("GetCATORayons")',
                     data: JSON.stringify({ "oblcatoid": Layer_admpol1.getSource().getFeatures()[f].get('catoid') }),
@@ -1680,7 +1657,7 @@
         ChangeSownAreaCatoObl();
     });
 
-    // показать диаграмму Посевные площади
+    // sown area chart
     function SownArea() {
         document.getElementById("SownArea_chart").src = "";
         var catoid = document.getElementById("SownAreacatoobl").options[document.getElementById("SownAreacatoobl").selectedIndex].value;
@@ -1703,7 +1680,7 @@
         });
     };
 
-    // смена базового слоя
+    // base layer change
     function ChangeMapSource(val) {
         if (val == 'OpenStreetMap') {
             var Source = new ol.source.OSM({
@@ -1742,27 +1719,16 @@
     };
 
     $(document).ready(function (e) {
-
         $.getScript("http://code.jquery.com/ui/1.11.3/jquery-ui.min.js", function (data, textStatus, jqxhr) {
         });
-
-        // высота карты
+        // map height
         $("#mapsidepanel").height($(window).height() - 260);
         if ($("#mapsidepanel").height() < 730) {
             $("#mapsidepanel").height(730);
         }
-
-        //$("#map").height($("#map_swipe").height() - $("#swipe").height());
         document.getElementById('sidepanel').setAttribute("style", "width:0px");
         document.getElementById('sidepanel').setAttribute("style", "display:none");
         map.updateSize();
-
         $("#MapSources").val("OpenCycleMap");
     });
-
-
-    function Test() {
-        alert($("#slider_date").html());
-    };
-
 </script>
