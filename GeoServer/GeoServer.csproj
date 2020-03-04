@@ -279,6 +279,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CATOTexts.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\GrainProduction.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GrainProduction.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\GrainProduction.kk.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GrainProduction.kk.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\GrainProduction.ru.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GrainProduction.ru.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\SownAreaTexts.kk.Designer.cs">
       <DependentUpon>SownAreaTexts.kk.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -724,6 +739,18 @@
     <EmbeddedResource Include="Resources\CATOTexts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CATOTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\GrainProduction.kk.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GrainProduction.kk.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\GrainProduction.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GrainProduction.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\GrainProduction.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GrainProduction.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\SownAreaTexts.kk.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

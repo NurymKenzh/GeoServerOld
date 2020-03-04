@@ -1,7 +1,7 @@
 ﻿@using GeoServer.Models
 
 @{
-    ViewBag.Title = "Тестовая карта";
+    ViewBag.Title = @GeoServer.Resources.HomeTexts.GrainProduction;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,7 +13,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.16.0/ol.css" type="text/css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.16.0/ol.js"></script>
-<link rel="stylesheet" href="overviewmap-custom-drag.css">
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -200,11 +199,6 @@
 <div id="main">
     <div class="toppanel" style="background: #366092 url(../Images/Logos/Logo1.png) no-repeat top left; background-size: contain;">
         <div style="float: right;">
-            <div align="right" style="height: 40px;">
-                <label style="padding: 10px; color: white;">
-                    AgroGIS
-                </label>
-            </div>
             <div>
                 <input type="button" id="button_overview" title="@GeoServer.Resources.Interface.OverviewMap" class="btn btn-default" onclick="ShowHideOverviewMap()" style="background: url(../Images/Buttons/MapOverview.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
                 <input type="button" title="@GeoServer.Resources.Interface.Layers" class="btn btn-default" onclick="ShowLayers()" style="background: url(../Images/Buttons/Layers.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
@@ -313,13 +307,13 @@
             <div class="split" id="title_legend">
                 <label class="split_label">
                     <u>
-                        Легенда
+                        @GeoServer.Resources.GrainProduction.Legend
                     </u>
                 </label>
             </div>
             <div id="legend" style="margin: 10px;">
                 <label style="padding-bottom: 10px; padding-left: 10px; color: #444444;">
-                    Состояние посевов 2014 г.
+                    @GeoServer.Resources.GrainProduction.TheStateOfCropsIn2014
                 </label>
                 <table>
                     <tr>
@@ -329,7 +323,7 @@
                             </div>
                         </td>
                         <td style="padding: 5px; color: #444444;">
-                            Посев
+                            @GeoServer.Resources.GrainProduction.Sowing
                         </td>
                     </tr>
                     <tr>
@@ -339,7 +333,7 @@
                             </div>
                         </td>
                         <td style="padding: 5px; color: #444444;">
-                            Пар
+                            @GeoServer.Resources.GrainProduction.Steam
                         </td>
                     </tr>
                     <tr>
@@ -349,7 +343,7 @@
                             </div>
                         </td>
                         <td style="padding: 5px; color: #444444;">
-                            Залежь
+                            @GeoServer.Resources.GrainProduction.Deposit
                         </td>
                     </tr>
                     <tr>
@@ -359,7 +353,7 @@
                             </div>
                         </td>
                         <td style="padding: 5px; color: #444444;">
-                            Пар из залежи
+                            @GeoServer.Resources.GrainProduction.SteamFromTheReservoir
                         </td>
                     </tr>
                     <tr>
@@ -369,7 +363,7 @@
                             </div>
                         </td>
                         <td style="padding: 5px; color: #444444;">
-                            Многолетка
+                            @GeoServer.Resources.GrainProduction.Perennial
                         </td>
                     </tr>
                 </table>
