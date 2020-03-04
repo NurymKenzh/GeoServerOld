@@ -716,10 +716,6 @@
             style: styles
         });
 
-    function Change() {
-        alert(Source_fields_vector.getFeatures().length);
-    };
-
     // buffer vector layer of fields
     var Source_bufer = new ol.source.Vector({});
     var Layer_bufer = new ol.layer.Vector({
@@ -808,9 +804,7 @@
         return ol.proj.transformExtent(extent, 'EPSG:4326', 'EPSG:3857');
     }
     var Layer_OpenCycleMap = new ol.layer.Tile({
-        source: new ol.source.OSM({
-            url: 'http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png'
-        })
+        source: new ol.source.OSM({ })
     });
 
     // Bing
@@ -882,9 +876,7 @@
         className: 'ol-overviewmap ol-custom-overviewmap',
         layers: [
           new ol.layer.Tile({
-              source: new ol.source.OSM({
-                  'url': 'http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png'
-              })
+              source: new ol.source.OSM({ })
           })
         ],
         collapseLabel: '\u00BB',
@@ -919,7 +911,6 @@
         tipLabel: ''
     });
 
-
     // zoom
     var zoom = new ol.control.Zoom({
         zoomInTipLabel: '',
@@ -940,13 +931,12 @@
         ]),
         layers: [
             Layer_OpenCycleMap,
-            
             Layer_fields,
             Layer_admpol,
             Layer_bufer, // selected field
             Layer_bufer_cato,
-            Layer_bufer_fields // area fields
-    ,Layer_Bing
+            Layer_bufer_fields, // area fields
+            Layer_Bing
         ],
         target: 'map',
         view: view
@@ -956,7 +946,6 @@
     Layer_Bing.on('precompose', function (event) {
         var ctx = event.context;
         var width = ctx.canvas.width * (swipe.value / 100);
-
         ctx.save();
         ctx.beginPath();
         ctx.rect(width, 0, ctx.canvas.width - width, ctx.canvas.height);
@@ -969,7 +958,6 @@
     document.getElementById('swipe').addEventListener('input', function () {
         map.render();
     }, false);
-
 
     // first call of the object information window
     var first_info = true;
@@ -1000,13 +988,11 @@
                 success: function (data) {
                     // field number
                     document.getElementById("fieldnumber").innerHTML = data.features[0].properties.idfrommap;
-
                     // work with the field as a vector
                     var polyFeature = new ol.Feature({
                         geometry: new ol.geom.MultiPolygon(data.features[0].geometry.coordinates)
                     });
                     Source_bufer.addFeature(polyFeature);
-
                     // getting the area of the field
                     $.ajax({
                         url: '@Url.Action("GetFieldArea")',
@@ -1019,7 +1005,6 @@
                         error: function () {
                         }
                     });
-
                     // getting fields CATO
                     $.ajax({
                         url: '@Url.Action("GetCATOName")',
@@ -1032,7 +1017,6 @@
                         error: function () {
                         }
                     });
-
                     // crop rotation data acquisition
                     $.ajax({
                         url: '@Url.Action("GetCropRotation")',
@@ -1045,7 +1029,6 @@
                         error: function () {
                         }
                     });
-
                     if (Source_bufer.getFeatures().length > 0) {
                         if (first_info == true) {
                             $(function () {
@@ -1140,10 +1123,8 @@
     function ToHome() {
         map.getView().setCenter([7500000, 6200000]);
         map.getView().setZoom(5);
-        $("#MapSources").val("OpenCycleMap");
-        var Source = new ol.source.OSM({
-            url: 'http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png'
-        });
+        $("#MapSources").val("OpenStreetMap");
+        var Source = new ol.source.OSM({ });
         Layer_OpenCycleMap.setSource(Source);
         Source_bufer_cato.clear();
         $("#catoobl").val("");
@@ -1188,7 +1169,6 @@
                         geometry: Layer_admpol1.getSource().getFeatures()[f].getGeometry()
                     });
                     Source_bufer_cato.addFeature(polyFeature);
-
                     // districts list
                     $.ajax({
                         url: '@Url.Action("GetCATORayons")',
@@ -1204,7 +1184,6 @@
                         error: function () {
                         }
                     });
-
                     var extent = Layer_admpol1.getSource().getFeatures()[f].getGeometry().getExtent();
                     map.getView().fit(extent, map.getSize());
                     break;
@@ -1238,7 +1217,6 @@
             document.getElementById("NDVIcatoobl").selectedIndex = document.getElementById("catoobl").selectedIndex - 1;
         }
         ChangeNDVICatoObl();
-
         $(function () {
             $("#dialog_NDVI").dialog({
                 width: 290,
@@ -1292,8 +1270,7 @@
             + "&DayStart=" + document.getElementById("NDVIDayStart").options[document.getElementById("NDVIDayStart").selectedIndex].value
             + "&MonthFinish=" + document.getElementById("NDVIMonthFinish").options[document.getElementById("NDVIMonthFinish").selectedIndex].value
             + "&DayFinish=" + document.getElementById("NDVIDayFinish").options[document.getElementById("NDVIDayFinish").selectedIndex].value
-            + "&CATOId=" + catoid
-        ;
+            + "&CATOId=" + catoid;
         $("#dialog_NDVI_chart").dialog({
             width: 840,
             height: 560,
@@ -1394,8 +1371,7 @@
             + "&Year=" + document.getElementById("CropsConditionYear").options[document.getElementById("CropsConditionYear").selectedIndex].value
             + "&MonthStart=" + document.getElementById("CropsConditionMonthStart").options[document.getElementById("CropsConditionMonthStart").selectedIndex].value
             + "&DayStart=" + document.getElementById("CropsConditionDayStart").options[document.getElementById("CropsConditionDayStart").selectedIndex].value
-            + "&CATOId=" + catoid
-        ;
+            + "&CATOId=" + catoid;
         $("#dialog_CropsCondition_chart").dialog({
             width: 490,
             height: 470,
@@ -1611,7 +1587,7 @@
         }
     };
 
-    // Sown area
+    // sown area
     function ShowSownArea() {
         if (document.getElementById("catoobl").options[document.getElementById("catoobl").selectedIndex].value != '') {
             document.getElementById("SownAreacatoobl").selectedIndex = document.getElementById("catoobl").selectedIndex - 1;
@@ -1626,7 +1602,7 @@
         });
     }
 
-    // Sown area: select area
+    // sown area: select area
     function ChangeSownAreaCatoObl() {
         for (var f = 0; f < Layer_admpol1.getSource().getFeatures().length; f++) {
             $("#SownAreacatoray").empty();
@@ -1683,14 +1659,7 @@
     // base layer change
     function ChangeMapSource(val) {
         if (val == 'OpenStreetMap') {
-            var Source = new ol.source.OSM({
-            });
-            Layer_OpenCycleMap.setSource(Source);
-        }
-        if (val == 'OpenCycleMap') {
-            var Source = new ol.source.OSM({
-                url: 'http://{a-c}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png'
-            });
+            var Source = new ol.source.OSM({ });
             Layer_OpenCycleMap.setSource(Source);
         }
         if (val == 'ArcGIS') {
@@ -1703,10 +1672,6 @@
                 url: 'http://server.arcgisonline.com/ArcGIS/rest/services/' +
                     'World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
             });
-            Layer_OpenCycleMap.setSource(Source);
-        }
-        if (val == 'MapQuest') {
-            var Source = new ol.source.MapQuest({ layer: 'osm' });
             Layer_OpenCycleMap.setSource(Source);
         }
         if (val == 'Bing') {
@@ -1729,6 +1694,6 @@
         document.getElementById('sidepanel').setAttribute("style", "width:0px");
         document.getElementById('sidepanel').setAttribute("style", "display:none");
         map.updateSize();
-        $("#MapSources").val("OpenCycleMap");
+        $("#MapSources").val("OpenStreetMap");
     });
 </script>

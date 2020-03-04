@@ -40,10 +40,8 @@ namespace GeoServer.Controllers
             ViewBag.SownAreacatoobl = ViewBag.CATOobl;
             List<SelectListItem> MapSources = new List<SelectListItem>();
             var MapSourcesData = new[]{
-                    new SelectListItem{ Value="OpenStreetMap",Text="Open Street Map"},
-                    new SelectListItem{ Value="OpenCycleMap",Text="Open Cycle Map", Selected = true},
+                    new SelectListItem{ Value="OpenStreetMap",Text="Open Street Map", Selected = true},
                     new SelectListItem{ Value="ArcGIS",Text="ArcGIS"},
-                    new SelectListItem{ Value="MapQuest",Text="MapQuest"},
                     new SelectListItem{ Value="Bing",Text="Bing"},
                     };
             MapSources = MapSourcesData.OrderBy(s => s.Text).ToList();
