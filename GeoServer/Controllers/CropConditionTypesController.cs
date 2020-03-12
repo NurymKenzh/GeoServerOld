@@ -51,7 +51,7 @@ namespace GeoServer.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Moderator")]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Max,Name")] CropConditionType cropConditionType)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Max,NameRU,NameKK,NameEN")] CropConditionType cropConditionType)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace GeoServer.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, Moderator")]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Max,Name")] CropConditionType cropConditionType)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Max,NameRU,NameKK,NameEN")] CropConditionType cropConditionType)
         {
             if (ModelState.IsValid)
             {

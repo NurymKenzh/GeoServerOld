@@ -268,6 +268,10 @@
     <Compile Include="Migrations\201606290823320_fields1.Designer.cs">
       <DependentUpon>201606290823320_fields1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003120843043_CropConditionType.cs" />
+    <Compile Include="Migrations\202003120843043_CropConditionType.Designer.cs">
+      <DependentUpon>202003120843043_CropConditionType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\admpol1.cs" />
@@ -755,6 +759,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606290823320_fields1.resx">
       <DependentUpon>201606290823320_fields1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003120843043_CropConditionType.resx">
+      <DependentUpon>202003120843043_CropConditionType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AccountTexts.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -8,7 +8,6 @@
 <link href="~/Content/ol.css" rel="stylesheet" />
 <script src="~/Scripts/ol.js"></script>
 
-<script src="~/Scripts/jquery-1.12.4.js"></script>
 <script src="~/Scripts/jquery-ui-1.12.0.js"></script>
 <link href="~/Content/jquery-ui.css" rel="stylesheet" />
 
@@ -1234,8 +1233,10 @@
                         $.each(data, function (i, d) {
                             $('#NDVIcatoray').append($('<option></option>').val(d.Id).html(d.Name));
                         });
-                        if (document.getElementById("catoray").options[document.getElementById("catoray").selectedIndex].value != '') {
-                            document.getElementById("NDVIcatoray").selectedIndex = document.getElementById("catoray").selectedIndex;
+                        if (document.getElementById("catoray").selectedIndex >= 0) {
+                            if (document.getElementById("catoray").options[document.getElementById("catoray").selectedIndex].value != '') {
+                                document.getElementById("NDVIcatoray").selectedIndex = document.getElementById("catoray").selectedIndex;
+                            }
                         }
                     },
                     error: function () {
@@ -1312,8 +1313,10 @@
                         $.each(data, function (i, d) {
                             $('#CropsConditioncatoray').append($('<option></option>').val(d.Id).html(d.Name));
                         });
-                        if (document.getElementById("catoray").options[document.getElementById("catoray").selectedIndex].value != '') {
-                            document.getElementById("CropsConditioncatoray").selectedIndex = document.getElementById("catoray").selectedIndex - 1;
+                        if (document.getElementById("catoray").selectedIndex >= 0) {
+                            if (document.getElementById("catoray").options[document.getElementById("catoray").selectedIndex].value != '') {
+                                document.getElementById("CropsConditioncatoray").selectedIndex = document.getElementById("catoray").selectedIndex - 1;
+                            }
                         }
                     },
                     error: function () {
@@ -1678,8 +1681,6 @@
     };
 
     $(document).ready(function (e) {
-        //$.getScript("http://code.jquery.com/ui/1.11.3/jquery-ui.min.js", function (data, textStatus, jqxhr) {
-        //});
         // map height
         $("#mapsidepanel").height($(window).height() - 260);
         if ($("#mapsidepanel").height() < 730) {
