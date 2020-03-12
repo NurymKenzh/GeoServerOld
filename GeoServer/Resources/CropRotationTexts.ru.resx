@@ -138,4 +138,7 @@
   <data name="CropRotation" xml:space="preserve">
     <value>Севооборот</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Название</value>
+  </data>
 </root>

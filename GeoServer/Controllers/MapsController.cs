@@ -577,7 +577,7 @@ namespace GeoServer.Controllers
             for (int i = 0; i < names.Count(); i++)
             {
                 int? name = Convert.ToInt32(names[i]);
-                names[i] = db.CropRotationTypes.Where(c => c.Id == name).FirstOrDefault().NameRU;
+                names[i] = db.CropRotationTypes.Where(c => c.Id == name).FirstOrDefault().Name;
             }
 
             for (int i = 0; i < values.Count(); i++)

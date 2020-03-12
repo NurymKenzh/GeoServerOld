@@ -138,4 +138,7 @@
   <data name="CropRotation" xml:space="preserve">
     <value>Crop rotation</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
 </root>

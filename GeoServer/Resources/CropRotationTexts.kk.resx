@@ -138,4 +138,7 @@
   <data name="CropRotation" xml:space="preserve">
     <value>Өсімдік айналу</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Ат</value>
+  </data>
 </root>

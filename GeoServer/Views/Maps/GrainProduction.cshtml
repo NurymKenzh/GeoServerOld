@@ -8,15 +8,15 @@
 <link href="~/Content/ol.css" rel="stylesheet" />
 <script src="~/Scripts/ol.js"></script>
 
-<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.16.0/ol.css" type="text/css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.16.0/ol.js"></script>
+<script src="~/Scripts/jquery-1.12.4.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.0.js"></script>
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.js"></script>
+
+<link href="~/Content/ol.css" rel="stylesheet" />
+<script src="~/Scripts/ol.js"></script>
 
 <style>
     .toppanel {
@@ -101,20 +101,20 @@
         display: block;
     }
 
-    .transparancy{
+    .transparancy {
         font-weight: normal;
     }
 
-    .split{
+    .split {
         height: 40px;
         background-color: #366092;
         color: #ffffff;
         cursor: pointer;
-        border:1px solid black;
+        border: 1px solid black;
         border-color: #d2d2d2;
     }
 
-    .split_label{
+    .split_label {
         margin: 8px;
     }
 
@@ -123,77 +123,77 @@
     }
 
     .tooltip {
-    position: absolute;
-    z-index: 1020;
-    display: block;
-    padding: 5px;
-    font-size: 11px;
-    visibility: visible;
-    margin-top: -2px;
-    bottom:120%;
-    margin-left: -2em;
-}
+        position: absolute;
+        z-index: 1020;
+        display: block;
+        padding: 5px;
+        font-size: 11px;
+        visibility: visible;
+        margin-top: -2px;
+        bottom: 120%;
+        margin-left: -2em;
+    }
 
-.tooltip .tooltip-arrow {
-    bottom: 0;
-    left: 50%;
-    margin-left: -5px;
-    border-top: 5px solid #000000;
-    border-right: 5px solid transparent;
-    border-left: 5px solid transparent;
-    position: absolute;
-    width: 0;
-    height: 0;
-}
+        .tooltip .tooltip-arrow {
+            bottom: 0;
+            left: 50%;
+            margin-left: -5px;
+            border-top: 5px solid #000000;
+            border-right: 5px solid transparent;
+            border-left: 5px solid transparent;
+            position: absolute;
+            width: 0;
+            height: 0;
+        }
 
-.tooltip-inner {
-    max-width: 200px;
-    padding: 3px 8px;
-    color: #ffffff;
-    text-align: center;
-    text-decoration: none;
-    background-color: #000000;
-    -webkit-border-radius: 4px;
-       -moz-border-radius: 4px;
-            border-radius: 4px;
-}
+    .tooltip-inner {
+        max-width: 200px;
+        padding: 3px 8px;
+        color: #ffffff;
+        text-align: center;
+        text-decoration: none;
+        background-color: #000000;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+    }
 
-.ui-slider {
-    background: black repeat-x bottom left;
-    border-bottom: 1px solid #EBEAE5;
-    height: 15px;
-    margin: 0;
-    padding: 0px;
-}
+    .ui-slider {
+        background: black repeat-x bottom left;
+        border-bottom: 1px solid #EBEAE5;
+        height: 15px;
+        margin: 0;
+        padding: 0px;
+    }
 
-.ui-slider-handle {
-    background: #ED6B51;
-    border-bottom: 1px solid #a8a79f;
-    border-right: 1px solid #a8a79f;
-    height: 20px;
-    width: 10px;
-    margin: 0;
-    padding: 0px;
-    display: inline-block;
-}
+    .ui-slider-handle {
+        background: #ED6B51;
+        border-bottom: 1px solid #a8a79f;
+        border-right: 1px solid #a8a79f;
+        height: 20px;
+        width: 10px;
+        margin: 0;
+        padding: 0px;
+        display: inline-block;
+    }
 
-.ui-slider-range {
-    height: 10px;
-    border-bottom: 3px solid red;
-    position: relative;
-}
+    .ui-slider-range {
+        height: 10px;
+        border-bottom: 3px solid red;
+        position: relative;
+    }
 
-.ui-slider-handle {
-    background: #ED6B51 !important;
-    border-bottom: 1px solid #a8a79f !important;
-    border-right: 1px solid #a8a79f !important;
-    height: 20px !important;
-    width: 10px !important;
-    margin: 0 !important;
-    padding: 0px !important;
-    display: inline-block !important;
-    top: -4px !important;
-}
+    .ui-slider-handle {
+        background: #ED6B51 !important;
+        border-bottom: 1px solid #a8a79f !important;
+        border-right: 1px solid #a8a79f !important;
+        height: 20px !important;
+        width: 10px !important;
+        margin: 0 !important;
+        padding: 0px !important;
+        display: inline-block !important;
+        top: -4px !important;
+    }
 </style>
 
 <div id="main">
@@ -208,13 +208,12 @@
                 <input type="button" title="@GeoServer.Resources.Interface.Tonneau" class="btn btn-default" onclick="Tonneau()" style="background: url(../Images/Buttons/Swipe.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
                 <input type="button" title="@GeoServer.Resources.Interface.ToHome" class="btn btn-default" onclick="ToHome()" style="background: url(../Images/Buttons/Home.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
                 <input type="button" title="@GeoServer.Resources.Interface.Workspace" class="btn btn-default" onclick="Workspace()" style="background: url(../Images/Buttons/Workspace.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
-                <input type="button" title="Справочник" class="btn btn-default" style="background: url(../Images/Buttons/Info.png) no-repeat top left; background-size: contain; float: right; width: 39px; height: 40px; margin: 6px;" />
                 @Html.DropDownList("MapSources", (IEnumerable<SelectListItem>)ViewBag.MapSources, htmlAttributes: new { @id = "MapSources", @class = "form-control", @style = "float: right; margin: 6px; width: 180px;", @onchange = "ChangeMapSource(this.value)" })
             </div>
         </div>
     </div>
     <div class="mapsidepanel" id="mapsidepanel">
-        <div id="sidepanel" class="sidepanel" >
+        <div id="sidepanel" class="sidepanel">
             @* Слои *@
             <div class="split" id="title_layers">
                 <label class="split_label">
@@ -466,7 +465,7 @@
         </tr>
     </table>
     <br />
-    <input type="button" value="OK" name="Action" onclick="NDVI();" class="btn btn-default" style="background-color: #d1d1d1"/>
+    <input type="button" value="OK" name="Action" onclick="NDVI();" class="btn btn-default" style="background-color: #d1d1d1" />
 </div>
 
 @* NDVI chart *@
@@ -522,7 +521,6 @@
         </tr>
         <tr>
             <td style="padding-left: 10px;">
-                
             </td>
         </tr>
     </table>
@@ -555,7 +553,7 @@
         </tr>
         <tr>
             <td style="padding-left: 10px;">
-                @Html.DropDownList("SownAreacatoray", Enumerable.Empty<SelectListItem>(), htmlAttributes: new { @Id = "SownAreacatoray", @class = "form-control" })
+                @Html.DropDownList("SownAreacatoray", Enumerable.Empty<SelectListItem>(), htmlAttributes: new { @id = "SownAreacatoray", @class = "form-control" })
             </td>
         </tr>
     </table>
@@ -697,7 +695,7 @@
     var Source_admpol = new ol.source.TileWMS({
         url: geoserverURL + geoserverWorkspace + '/wms?',
         params: {
-            'LAYERS': 'admpol',
+            'LAYERS': geoserverWorkspace + ':admpol',
             'VERSION': '1.1.0',
             'FORMAT': 'image/png',
             'TILED': true
@@ -755,7 +753,7 @@
     var Layer_admpol2 = new ol.layer.Vector();
     // vector layer of areas
     var Layer_admpol1 = new ol.layer.Vector();
-    var url1 = "http://localhost:8080/geoserver/localhost/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=localhost:admpol1&outputFormat=text/javascript&format_options=callback:getJson";
+    var url1 = geoserverURL + geoserverWorkspace + "/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=" + geoserverWorkspace + ":admpol1&outputFormat=text/javascript&format_options=callback:getJson";
     $.ajax({
         jsonp: false,
         jsonpCallback: 'getJson',
@@ -772,7 +770,7 @@
                 })
             });
             // vector layer of districts
-            var url2 = "http://localhost:8080/geoserver/localhost/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=localhost:admpol2&outputFormat=text/javascript&format_options=callback:getJson";
+            var url2 = geoserverURL + geoserverWorkspace + "/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=" + geoserverWorkspace + ":admpol2&outputFormat=text/javascript&format_options=callback:getJson";
             $.ajax({
                 jsonp: false,
                 jsonpCallback: 'getJson',
@@ -1612,8 +1610,10 @@
                         $.each(data, function (i, d) {
                             $('#SownAreacatoray').append($('<option></option>').val(d.Id).html(d.Name));
                         });
-                        if (document.getElementById("catoray").options[document.getElementById("catoray").selectedIndex].value != '') {
-                            document.getElementById("SownAreacatoray").selectedIndex = document.getElementById("catoray").selectedIndex;
+                        if (document.getElementById("catoray").selectedIndex >= 0) {
+                            if (document.getElementById("catoray").options[document.getElementById("catoray").selectedIndex].value != '') {
+                                document.getElementById("SownAreacatoray").selectedIndex = document.getElementById("catoray").selectedIndex;
+                            }
                         }
                     },
                     error: function () {
@@ -1678,8 +1678,8 @@
     };
 
     $(document).ready(function (e) {
-        $.getScript("http://code.jquery.com/ui/1.11.3/jquery-ui.min.js", function (data, textStatus, jqxhr) {
-        });
+        //$.getScript("http://code.jquery.com/ui/1.11.3/jquery-ui.min.js", function (data, textStatus, jqxhr) {
+        //});
         // map height
         $("#mapsidepanel").height($(window).height() - 260);
         if ($("#mapsidepanel").height() < 730) {
