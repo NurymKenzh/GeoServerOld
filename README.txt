@@ -1,2 +1,9 @@
-DB: Web.config: connectionStrings
-GeoServer: MapsController: const string geoserverURL and geoserverWorkspace
+Database:
+	Web.config: connectionStrings
+GeoServer:
+	MapsController: const string geoserverURL and geoserverWorkspace
+Error:
+	Could not find a part of the path '...\GeoServerOld\GeoServer\bin\roslyn\csc.exe'.
+Solution:
+	run in the Package Manager Console:
+	Update-Package Microsoft.CodeDom.Providers.DotNetCompilerPlatform -r
