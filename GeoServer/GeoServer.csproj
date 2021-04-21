@@ -583,6 +583,7 @@
     <Content Include="Images\Legend\MSW.jpg" />
     <Content Include="Images\Logos\Frontpage.jpg" />
     <Content Include="Images\Logos\Logo1.png" />
+    <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
