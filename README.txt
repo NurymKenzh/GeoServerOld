@@ -1,7 +1,7 @@
 Database:
 	Web.config: connectionStrings
 GeoServer:
-	MapsController: const string geoserverURL and geoserverWorkspace
+	MapsController: const string geoserverPort and geoserverWorkspace
 Error:
 	Could not find a part of the path '...\GeoServerOld\GeoServer\bin\roslyn\csc.exe'.
 Solution:

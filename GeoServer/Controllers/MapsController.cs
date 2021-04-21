@@ -12,7 +12,7 @@ namespace GeoServer.Controllers
 {
     public class MapsController : Controller
     {
-        const string geoserverURL = "http://92.46.36.100:8080/geoserver/",
+        const string geoserverPort = "8080",
             geoserverWorkspace = "GeoServerOld";
 
         private NpgsqlContext db = new NpgsqlContext();
@@ -45,7 +45,7 @@ namespace GeoServer.Controllers
                     };
             MapSources = MapSourcesData.OrderBy(s => s.Text).ToList();
             ViewBag.MapSources = MapSources;
-            ViewBag.geoserverURL = geoserverURL;
+            ViewBag.geoserverPort = geoserverPort;
             ViewBag.geoserverWorkspace = geoserverWorkspace;
             return View();
         }

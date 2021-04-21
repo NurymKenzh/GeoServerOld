@@ -565,8 +565,9 @@
 </div>
 
 <script>
-    var geoserverURL = '@ViewBag.geoserverURL',
+    var geoserverURL = window.location.protocol + '//' + window.location.hostname + ':' +  '@ViewBag.geoserverPort' + '/geoserver/',
         geoserverWorkspace = '@ViewBag.geoserverWorkspace';
+
 
     function style_fields_ray_cc(feature, resolution) {
         if (feature.get('NDVI') > 0.7) {
